@@ -156,7 +156,8 @@ go to graph Prometheus and add process_cpu_seconds_total in the bar
 
 * Now i want something more precise:
 I want my total CPU use 
-```sum(rate(process_cpu_seconds_total[1m])) / count(process_cpu_seconds_total) * 100
+```
+sum(rate(process_cpu_seconds_total[1m])) / count(process_cpu_seconds_total) * 100
 ```
 
 ### Stop And Remove Service windows_exporter:
