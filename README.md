@@ -25,7 +25,7 @@ This project facilitates the seamless integration of Prometheus and Grafana on t
 
 1. Run Docker Desktop on your machine.
 2. If not already present, create the `C:\temp` folder.
-3. Create `C:\temp\prometheus-firstrun.yml` or copy the file from the repository. Add the following configuration:
+3. Create `C:\temp\prometheus.yml` or copy the file from the repository. Add the following configuration:
 
     ```yaml
     global:
@@ -46,7 +46,7 @@ This project facilitates the seamless integration of Prometheus and Grafana on t
 
     ```cmd
     docker pull prom/prometheus
-    docker run -p 9090:9090 -v "C:\temp\prometheus-firstrun.yml":/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus
+    docker run -p 9090:9090 -v "C:\temp\prometheus.yml":/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus
     ```
 6. Open Your Chrome and check :
 	```
@@ -59,7 +59,8 @@ This project facilitates the seamless integration of Prometheus and Grafana on t
 # Usage
 
 ## Scraping the Data From Windows:
-### 1. Download The Module windows_exporter :
+
+### 1. Download and install the module windows_exporter :
 
 [List of Release](https://github.com/prometheus-community/windows_exporter/releases)
 
@@ -87,10 +88,76 @@ web:
 
 3. Run windows_exporter like this :
 ```cmd
-windows_exporter.exe --config.file=config-windowexporter.yml --config.file.insecure-skip-verify
+windows_exporter-0.24.0-386.exe --config.file=config-windowexporter.yml
 ``` 
 
-2. Check if your windows_exporter run , go to Search Windows > Services ,open it and check the Service name: windows_exporter
+4. Check the metric in : **http://localhost:9182/metrics**
+
+5. Now Create a Service for run that automaticly 
+
+```cmd
+sc create windows_exporter binPath= "C:\path\to\windows_exporter-0.24.0-386.exe --config.file=C:\path\to\config-windowexporter.yml"
+```
+
+6. Check if your windows_exporter run , go to Search Windows > Services ,open it and check the Service name: windows_exporter
+
+### 2. Configure Prometheus for scrape the data from windows:
+
+1. first you need to stop you Prometheus server :
+
+- stop the server
+- remove volume:
+```
+docker volume rm -f  prometheus-data
+```
+if you not succed to remove maybe you need to remove all containes build ( check docker ps -a )
+
+2. Reconfigure the file prometheus.yml :
+change the job_name by th name of your computer and change IP_WINDOWS by your IP and PORT_WINDOWS_EXPORTER by 9182 that we use for windows_exporter
+
+    ```yaml
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+    
+    scrape_configs:
+      - job_name: NAME_COMPUTER
+        static_configs:
+          - targets: ['IP_WINDOWS:PORT_WINDOWS_EXPORTER']
+    ```
+	
+3. Create a new volume and run the Server Prometheus 
+	```cmd
+	docker volume create prometheus-data
+	docker run -p 9090:9090 -v "C:\temp\prometheus.yml":/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus
+	```
+4. check if you have the connection with your windows_exporter:
+go to your prometheus > target or put this URL **http://localhost:9090/targets?search=**
+
+if you see your NAME_COMPUTER click on "show more" and check if status is Up with your IP 
+
+### 3. Test Prometheus Graph:
+
+**http://localhost:9090/graph**
+
+1. Add a data that you can see on your metric windows_exporter to the expression bar :
+
+example :
+* http://localhost:9182/metrics
+I have this data 
+```
+....
+process_cpu_seconds_total 1.09375
+process_max_fds 1.6777216e+07
+....
+
+```
+go to graph Prometheus and add process_cpu_seconds_total in the bar 
+
+* Now i want something more precise:
+I want my total CPU use 
+```sum(rate(process_cpu_seconds_total[1m])) / count(process_cpu_seconds_total) * 100
+```
 
 ### Stop And Remove Service windows_exporter:
 
