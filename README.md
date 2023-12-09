@@ -316,13 +316,13 @@ home > Administration > organization >apiorg
 ```
 
 ** Sumup of all the step with **
-On Linux:
+On Linux[create-dashboard-api.sh](create-dashboard-api.sh) :
 
 ```
 ./create-dashboard-api.sh dashboard.json
 ```
 
-On windows:
+On windows [create-dashboard-api.ps1](create-dashboard-api.ps1) :
 ```
 .\create-dashboard-api.ps1 dashboard.json
 
