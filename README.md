@@ -196,55 +196,55 @@ you will get Connection refuse
 	**************
 	*Solution 1: *
 	**************
-	Get the IP of docker prometheus
-	```
-	docker ps 
-	# check the id of your container prometheus or get the name of your container
-	docker inspect -f '{{.NetworkSettings.IPAddress}}' ID_OR_NAME_CONTAINER_PROMETHEUS
-	```
-	you will get the IP 
-	
-	change the URL: http://IP_CONTAINER_PROMETHEUS:9090
-	
+Get the IP of docker prometheus
+```
+docker ps 
+# check the id of your container prometheus or get the name of your container
+docker inspect -f '{{.NetworkSettings.IPAddress}}' ID_OR_NAME_CONTAINER_PROMETHEUS
+```
+you will get the IP 
+
+change the URL: http://IP_CONTAINER_PROMETHEUS:9090
+
 	
 	**************
 	*Solution 2: *
 	**************
-	Put Grafana and prometheus in the same network :
-	1. Stop prometheus and grafana:
-	
-	```cmd
-	docker ps
-	docker stop ID_PROMETHEUS
-	docker stop ID_GRAFANA
-	```
-	2. Create network
-	
-	```cmd
-	docker network create monitoring
-	```
-	
-	3. Run Prometheus like this :
-	```cmd
-	docker run -p 9090:9090 --name prometheus --network monitoring -v "C:\temp\prometheus.yml":/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus
-	```
-	
-	4. Run Grafana like this :
-	```cmd
-	docker run -d -p 3000:3000 --network monitoring --name=grafana --volume grafana-storage:/var/lib/grafana grafana/grafana
-	```
-	
-	5. check the network:
-	```cmd
-	docker inspect monitoring
-	```
-	You will see 2 container related name: grafana and prometheus
-	
-	so now is more simple for use we only need to put in 
-	URL : http://prometheus:9090/
+Put Grafana and prometheus in the same network :
+1. Stop prometheus and grafana:
 
-	Go Down and Click on "Save & Test" to ensure that Grafana can connect to Prometheus successfully.
-	
+```cmd
+docker ps
+docker stop ID_PROMETHEUS
+docker stop ID_GRAFANA
+```
+2. Create network
+
+```cmd
+docker network create monitoring
+```
+
+3. Run Prometheus like this :
+```cmd
+docker run -p 9090:9090 --name prometheus --network monitoring -v "C:\temp\prometheus.yml":/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus
+```
+
+4. Run Grafana like this :
+```cmd
+docker run -d -p 3000:3000 --network monitoring --name=grafana --volume grafana-storage:/var/lib/grafana grafana/grafana
+```
+
+5. check the network:
+```cmd
+docker inspect monitoring
+```
+You will see 2 container related name: grafana and prometheus
+
+so now is more simple for use we only need to put in 
+URL : http://prometheus:9090/
+
+Go Down and Click on "Save & Test" to ensure that Grafana can connect to Prometheus successfully.
+
 ### USE API Grafana:
 
 #### Cree un API Token and Dashboard:
