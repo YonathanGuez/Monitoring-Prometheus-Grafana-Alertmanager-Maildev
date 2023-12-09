@@ -182,6 +182,7 @@ c. Go to "Connection" > "Data Sources" > "Add data source."
 d. Choose "Prometheus" from the list of available data sources.
 
 e. In the "HTTP" section, set the URL to the Prometheus endpoint:
+
 	***************************************************
 	* thit Step will be not working i will explaine   *
 	***************************************************
