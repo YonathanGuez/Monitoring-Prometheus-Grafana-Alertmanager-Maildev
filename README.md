@@ -183,17 +183,16 @@ d. Choose "Prometheus" from the list of available data sources.
 
 e. In the "HTTP" section, set the URL to the Prometheus endpoint:
 
-
 	***************************************************
 	* thit Step will be not working i will explaine   *
 	***************************************************
-	because you need to give him the IP of your docker prometheus
-	
-	URL: http://localhost:9090
+because you need to give him the IP of your docker prometheus
 
-	Go Down and Click on "Save & Test" to ensure that Grafana can connect to Prometheus successfully.
-	you will get Connection refuse 
-	
+URL: http://localhost:9090
+
+Go Down and Click on "Save & Test" to ensure that Grafana can connect to Prometheus successfully.
+you will get Connection refuse 
+
 	**************
 	*Solution 1: *
 	**************
