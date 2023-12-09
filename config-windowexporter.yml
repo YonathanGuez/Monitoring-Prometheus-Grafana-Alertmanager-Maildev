@@ -1,5 +1,5 @@
 collectors:
-  enabled: cpu,cs,logical_disk,net,os,service
+  enabled: cpu,cs,logical_disk,net,os,service,system
 collector:
   service:
     services-where: Name='windows_exporter'
