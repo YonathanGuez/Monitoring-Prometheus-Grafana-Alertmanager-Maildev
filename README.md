@@ -252,26 +252,31 @@ Go Down and Click on "Save & Test" to ensure that Grafana can connect to Prometh
 For all this steps if you are on windows like me i advice to use cmd of MINGW64 (if you have git you only need to open git bash terminal )
 
 1. Create Organization:
+
 ```
 curl -X POST -H "Content-Type: application/json" -d '{"name":"apiorg"}' http://admin:admin@localhost:3000/api/orgs
 
-```cmd
+```
+
 result : {"message":"Organization created","orgId":2}
 
 
 2.Switch the org context for the Admin user to the new org:
+
 ```cmd
 #curl -X POST http://admin:admin@localhost:3000/api/user/using/<id of new org>
 curl -X POST http://admin:admin@localhost:3000/api/user/using/2
 ``` 
 
 3. Create a Service Account:
+
 ```cmd
 curl -X POST -H "Content-Type: application/json" -d '{"name":"test", "role": "Admin"}' http://admin:admin@localhost:3000/api/serviceaccounts
 ```
 result: {"id":3,"name":"test","login":"sa-test","orgId":2,"isDisabled":false,"role":"Admin","tokens":0,"avatarUrl":""}
 
 4. Create a Service Account token:
+
 ```cmd
 #curl -X POST -H "Content-Type: application/json" -d '{"name":"test-token"}' http://admin:admin@localhost:3000/api/serviceaccounts/<service account id>/tokens
 curl -X POST -H "Content-Type: application/json" -d '{"name":"test-token"}' http://admin:admin@localhost:3000/api/serviceaccounts/3/tokens
@@ -280,7 +285,9 @@ curl -X POST -H "Content-Type: application/json" -d '{"name":"test-token"}' http
 result : {"id":2,"name":"test-token","key":"glsa_b60AauSVVN35pMEE9bAd87Bzad8iMFaz_96041486"}
 
 5 Create the first Dashboard :
+
 Don't forget to change the KEY_TOKEN_API
+
 ```cmd
 curl -X POST --insecure -H "Authorization: Bearer KEY_TOKEN_API" -H "Content-Type: application/json" -d '{
   "dashboard": {
@@ -300,17 +307,21 @@ curl -X POST --insecure -H "Authorization: Bearer KEY_TOKEN_API" -H "Content-Typ
 ```
 
 Now you can check if you have in your Grafana in:
+
 ```
 home > Administration > organization >apiorg
 					  > service account > test > tokens > test-token
 	 > Dashboard > Production Overview
 			  
 ```
+
 ** Sumup of all the step with **
 On Linux:
+
 ```
 ./create-dashboard-api.sh dashboard.json
 ```
+
 On windows:
 ```
 .\create-dashboard-api.ps1 dashboard.json
