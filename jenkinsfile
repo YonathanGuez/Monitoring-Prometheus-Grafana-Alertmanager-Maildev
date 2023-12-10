@@ -1,0 +1,132 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clean') {
+            steps {
+                script {
+                    // Clean workspace
+                    if (isUnix()) {
+                        sh 'rm -rf $WORKSPACE/*'
+                    } else {
+                        bat 'rmdir /S /Q %WORKSPACE%'
+                        bat 'mkdir %WORKSPACE%'
+                    }
+                }
+            }
+        }
+
+        stage('Git Clone') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your/repo.git'
+            }
+        }
+		
+		stage('Create Network') {
+            steps {
+                script {
+                    // Create Docker network
+                    if (isUnix()) {
+                        sh 'docker network create monitoring'
+                    } else {
+                        bat 'docker network create monitoring'
+                    }
+                }
+            }
+        }
+		stage('Create Volume') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'docker volume rm -f  prometheus-data'
+						sh 'docker volume create grafana-storage'
+                    } else {
+                        bat 'docker volume rm -f  prometheus-data'
+						bat 'docker volume create grafana-storage'
+                    }
+                }
+            }
+        }
+
+
+        stage('Docker Run Prometheus and Grafana') {
+            steps {
+                script {
+                    // Docker run based on OS
+                    if (isUnix()) {
+                        docker.image('prom/prometheus').withRun('-p 9090:9090 --name prometheus --network monitoring -v C:\\temp\\prometheus.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus')
+                        docker.image('grafana/grafana').withRun('-p 3000:3000 --name grafana  --network monitoring --volume grafana-storage:/var/lib/grafana')
+                    } else {
+                        bat 'docker run -p -p 9090:9090 --name prometheus --network monitoring -v C:\\temp\\prometheus.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus'
+                        bat 'docker run -d -p 3000:3000 --network monitoring --name=grafana --volume grafana-storage:/var/lib/grafana grafana/grafana'
+                    }
+                    
+                    // Wait for containers to start (depends on your setup)
+                    if (isUnix()) {
+                        sh 'sleep 10'
+                    } else {
+                        bat 'timeout /nobreak /t 10'
+                    }
+                }
+            }
+        }
+
+        stage('Run Script to Build Dashboard') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh './create-dashboard-api.sh dashboard.json'
+                    } else {
+                        bat '.\\create-dashboard-api.ps1 dashboard.json'
+                    }
+                }
+            }
+        }
+
+        stage('Check Dashboard URL') {
+            steps {
+                script {
+                    // Replace 'admin:admin' with your Grafana credentials
+                    def response
+                    if (isUnix()) {
+                        response = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://admin:admin@localhost:3000', returnStatus: true)
+                    } else {
+                        response = bat(script: 'curl -s -o NUL -w "%%{http_code}" http://admin:admin@localhost:3000', returnStatus: true)
+                    }
+                    if (response == 200) {
+                        echo 'Dashboard URL is accessible.'
+                    } else {
+                        error 'Failed to access Dashboard URL.'
+                    }
+                }
+            }
+        }
+
+        stage('Clean and Stop Containers') {
+            steps {
+                script {
+                    // Docker stop and remove based on OS
+                    if (isUnix()) {
+                        docker.image('prom/prometheus').stop()
+                        docker.image('prom/prometheus').remove()
+                        docker.image('grafana/grafana').stop()
+                        docker.image('grafana/grafana').remove()
+                    } else {
+                        bat 'docker stop $(docker ps -q)'
+                        bat 'docker rm $(docker ps -a -q)'
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Clean up any artifacts or resources if needed
+        }
+    }
+
+    def isUnix() {
+        return !isWindows()
+    }
+}
