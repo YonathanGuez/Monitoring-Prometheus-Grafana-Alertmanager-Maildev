@@ -65,9 +65,7 @@ pipeline {
 						if (isUnix()) {
 							sh './authomation_config_prometheus_yml.sh'
 						}else {
-							powershell '''
-								.\\authomation_config_prometheus_yml.ps1
-							'''
+							bat 'powershell.exe -File .\\authomation_config_prometheus_yml.ps1'
 						}
 					}
 				}
