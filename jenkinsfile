@@ -15,7 +15,7 @@ pipeline {
         }
 		stage('Check Docker up ') {
             steps {
-				 if (isUnix()) {
+				 if (isUnix) {
 					sh "echo skip"
 				 }else{
 					script {
