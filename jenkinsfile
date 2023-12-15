@@ -27,6 +27,10 @@ pipeline {
 							 error("Docker is not running. try to start docker in your laptop...")
 						} else {
 							echo "Docker is already running."
+							bat 'docker network rm monitoring'
+							bat 'docker volume rm -f prometheus-data'
+							bat 'docker volume rm -f grafana-storage'
+							
 						}
 					}
 				}
@@ -38,11 +42,11 @@ pipeline {
                     // Create Docker network
                     if (isUnix()) {
                         sh 'docker network create monitoring'
-						sh 'docker volume rm -f  prometheus-data'
+						sh 'docker volume create prometheus-data'
 						sh 'docker volume create grafana-storage'
                     } else {
                         bat 'docker network create monitoring'
-						bat 'docker volume rm -f  prometheus-data'
+						bat 'docker volume create prometheus-data'
 						bat 'docker volume create grafana-storage'
                     }
                 }
