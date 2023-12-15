@@ -4,32 +4,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Clean') {
-            steps {
-                script {
-                    // Clean workspace
-                    if (isUnix()) {
-                        sh 'rm -rf $WORKSPACE/*'
-                    } else {
-                        bat 'rmdir /S /Q %WORKSPACE%'
-                        bat 'mkdir %WORKSPACE%'
-                    }
-                }
-            }
-        }
 
-        stage('Git Clone') {
-            steps {
-                git branch: 'main', url: 'https://github.com/your/repo.git'
-				
-				    // Extract the repository name from the GIT_URL
-                script {
-                    def repoName = env.GIT_URL.tokenize("/")[-1].replace(".git", "")
-                    echo "Cloned repository name: ${repoName}"
-                }
-            }
-        }
-		
+        def repoName = env.GIT_URL.tokenize("/")[-1].replace(".git", "")
+        echo "Cloned repository name: ${repoName}"
 		stage('Create Network+Volume') {
             steps {
                 script {
@@ -135,6 +112,19 @@ pipeline {
                     } else {
                         bat 'docker stop $(docker ps -q)'
                         bat 'docker rm $(docker ps -a -q)'
+                    }
+                }
+            }
+        }
+		stage('Clean') {
+            steps {
+                script {
+                    // Clean workspace
+                    if (isUnix()) {
+                        sh 'rm -rf $WORKSPACE/*'
+                    } else {
+                        bat 'rmdir /S /Q %WORKSPACE%'
+                        bat 'mkdir %WORKSPACE%'
                     }
                 }
             }
