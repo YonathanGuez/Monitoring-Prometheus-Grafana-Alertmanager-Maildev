@@ -1,6 +1,4 @@
-def isUnix() {
-	return !isWindows()
-}
+
 
 pipeline {
     agent any
