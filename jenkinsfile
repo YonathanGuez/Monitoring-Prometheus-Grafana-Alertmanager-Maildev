@@ -4,9 +4,14 @@ pipeline {
     agent any
 
     stages {
-
-        def repoName = env.GIT_URL.tokenize("/")[-1].replace(".git", "")
-        echo "Cloned repository name: ${repoName}"
+		script {
+			def repoName = env.GIT_URL.tokenize("/")[-1].replace(".git", "")
+			if (isUnix()) {
+				sh "echo Cloned repository name: ${repoName}"
+			}else{
+				bat "echo Cloned repository name: ${repoName}"
+			}
+		}
 		stage('Create Network+Volume') {
             steps {
                 script {
