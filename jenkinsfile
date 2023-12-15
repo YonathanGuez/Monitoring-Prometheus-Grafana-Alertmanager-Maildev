@@ -1,3 +1,7 @@
+def isUnix() {
+	return !isWindows()
+}
+
 pipeline {
     agent any
 
@@ -143,9 +147,5 @@ pipeline {
         always {
             // Clean up any artifacts or resources if needed
         }
-    }
-
-    def isUnix() {
-        return !isWindows()
     }
 }
