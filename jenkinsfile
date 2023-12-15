@@ -13,6 +13,17 @@ pipeline {
                 }
             }
         }
+		stage('Echo on Both OS') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        echo 'Running echo on Linux...'
+                    } else {
+                        bat 'echo Running echo on Windows...'
+                    }
+                }
+            }
+        }
 		stage('Check Docker up ') {
             steps {
 				 if (isUnix) {
