@@ -83,13 +83,8 @@ pipeline {
 							docker.image('prom/prometheus').withRun('-p 9090:9090 --name prometheus --network monitoring -v prometheus-IP.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus')
 							docker.image('grafana/grafana').withRun('-p 3000:3000 --name grafana  --network monitoring --volume grafana-storage:/var/lib/grafana')
 						} else {
-							// Get the current working directory
-							def currentDir = pwd()
-							echo "Current working directory: ${currentDir}"
-							// Replace backslashes with double backslashes
-							currentDir = currentDir.replace("\\", "\\\\")
-							bat 'docker run -p 9090:9090 --name prometheus --network monitoring -v $currentDir\\prometheus-IP.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus'
-							bat 'docker run -d -p 3000:3000 --network monitoring --name=grafana --volume grafana-storage:/var/lib/grafana grafana/grafana'
+							bat "docker run -p 9090:9090 --name prometheus --network monitoring -v $WORKSPACE\\prometheus-IP.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus"
+							bat "docker run -d -p 3000:3000 --network monitoring --name=grafana --volume grafana-storage:/var/lib/grafana grafana/grafana"
 						}
 						
 						// Wait for containers to start (depends on your setup)
