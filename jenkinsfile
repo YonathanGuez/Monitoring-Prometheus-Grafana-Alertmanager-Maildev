@@ -13,23 +13,13 @@ pipeline {
                 }
             }
         }
-		stage('Echo on Both OS') {
-            steps {
-                script {
-                    if (isUnix()) {
-                        echo 'Running echo on Linux...'
-                    } else {
-                        bat 'echo Running echo on Windows...'
-                    }
-                }
-            }
-        }
+
 		stage('Check Docker up ') {
             steps {
-				 if (isUnix) {
-					sh "echo skip"
-				 }else{
-					script {
+				script {
+					if (isUnix) {
+						sh "echo skip"
+					}else{
 						// Check if Docker is running
 						def dockerStatus = bat(script: 'docker info', returnStatus: true)
 						
@@ -44,7 +34,7 @@ pipeline {
 						}
 					}
 				}
-            }
+			}
         }
 		stage('Create Network+Volume') {
             steps {
