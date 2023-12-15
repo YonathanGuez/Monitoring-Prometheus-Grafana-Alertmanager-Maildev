@@ -19,57 +19,76 @@ pipeline {
         stage('Git Clone') {
             steps {
                 git branch: 'main', url: 'https://github.com/your/repo.git'
+				
+				    // Extract the repository name from the GIT_URL
+                script {
+                    def repoName = env.GIT_URL.tokenize("/")[-1].replace(".git", "")
+                    echo "Cloned repository name: ${repoName}"
+                }
             }
         }
 		
-		stage('Create Network') {
+		stage('Create Network+Volume') {
             steps {
                 script {
                     // Create Docker network
                     if (isUnix()) {
                         sh 'docker network create monitoring'
-                    } else {
-                        bat 'docker network create monitoring'
-                    }
-                }
-            }
-        }
-		stage('Create Volume') {
-            steps {
-                script {
-                    if (isUnix()) {
-                        sh 'docker volume rm -f  prometheus-data'
+						sh 'docker volume rm -f  prometheus-data'
 						sh 'docker volume create grafana-storage'
                     } else {
-                        bat 'docker volume rm -f  prometheus-data'
+                        bat 'docker network create monitoring'
+						bat 'docker volume rm -f  prometheus-data'
 						bat 'docker volume create grafana-storage'
                     }
                 }
             }
         }
-
-
-        stage('Docker Run Prometheus and Grafana') {
+		
+		stage('Create prometheus.yml') {
             steps {
-                script {
-                    // Docker run based on OS
-                    if (isUnix()) {
-                        docker.image('prom/prometheus').withRun('-p 9090:9090 --name prometheus --network monitoring -v C:\\temp\\prometheus.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus')
-                        docker.image('grafana/grafana').withRun('-p 3000:3000 --name grafana  --network monitoring --volume grafana-storage:/var/lib/grafana')
-                    } else {
-                        bat 'docker run -p -p 9090:9090 --name prometheus --network monitoring -v C:\\temp\\prometheus.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus'
-                        bat 'docker run -d -p 3000:3000 --network monitoring --name=grafana --volume grafana-storage:/var/lib/grafana grafana/grafana'
-                    }
-                    
-                    // Wait for containers to start (depends on your setup)
-                    if (isUnix()) {
-                        sh 'sleep 10'
-                    } else {
-                        bat 'timeout /nobreak /t 10'
-                    }
-                }
+				script {
+					dir("${repoName}") {
+						if (isUnix()) {
+							sh './authomation_config_prometheus_yml.sh'
+						}else {
+							powershell '''
+								.\\authomation_config_prometheus_yml.ps1
+							'''
+						}
+					}
+				}
             }
         }
+
+        stage('Docker Run Prometheus and Grafana') {
+			steps {
+				script {
+					dir("${repoName}") {
+						// Docker run based on OS
+						if (isUnix()) {
+							docker.image('prom/prometheus').withRun('-p 9090:9090 --name prometheus --network monitoring -v prometheus-IP.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus')
+							docker.image('grafana/grafana').withRun('-p 3000:3000 --name grafana  --network monitoring --volume grafana-storage:/var/lib/grafana')
+						} else {
+							// Get the current working directory
+							def currentDir = pwd()
+							echo "Current working directory: ${currentDir}"
+							// Replace backslashes with double backslashes
+							currentDir = currentDir.replace("\\", "\\\\")
+							bat 'docker run -p 9090:9090 --name prometheus --network monitoring -v $currentDir\\prometheus-IP.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus'
+							bat 'docker run -d -p 3000:3000 --network monitoring --name=grafana --volume grafana-storage:/var/lib/grafana grafana/grafana'
+						}
+						
+						// Wait for containers to start (depends on your setup)
+						if (isUnix()) {
+							sh 'sleep 10'
+						} else {
+							bat 'timeout /nobreak /t 10'
+						}
+					}
+				}
+			}
+		}
 
         stage('Run Script to Build Dashboard') {
             steps {

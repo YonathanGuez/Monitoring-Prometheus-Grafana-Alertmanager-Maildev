@@ -317,14 +317,32 @@ home > Administration > organization >apiorg
 
 ** Sumup of all the step with **
 
-On Linux[create-dashboard-api.sh](create-dashboard-api.sh) :
+On Linux:
 
+1) Create file prometheus-IP.yml :[authomation_config_prometheus_yml.sh](authomation_config_prometheus_yml.sh) :
+
+```cmd
+./authomation_config_prometheus_yml.sh
 ```
+
+2) [create-dashboard-api.sh](create-dashboard-api.sh) :
+
+```cmd
 ./create-dashboard-api.sh dashboard.json
 ```
 
-On windows [create-dashboard-api.ps1](create-dashboard-api.ps1) :
+On windows :
+
+1) Create file prometheus-IP.yml :[authomation_config_prometheus_yml.ps1](authomation_config_prometheus_yml.ps1) :
+
+```cmd
+powershell -File authomation_config_prometheus_yml.ps1
 ```
+
+
+2) [create-dashboard-api.ps1](create-dashboard-api.ps1) :
+
+```cmd
 .\create-dashboard-api.ps1 dashboard.json
 
 ```
