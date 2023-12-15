@@ -25,8 +25,9 @@ pipeline {
 						
 						if (dockerStatus != 0) {
 							echo "Docker is not running. Starting Docker..."
-							bat 'start-service docker'
-							
+							bat 'Start-Process -NoNewWindow -FilePath "C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe" -ArgumentList "--start" -PassThru | Wait-Process'
+							bat 'docker info'
+							// Add more Docker commands as needed
 							// Wait for Docker to start (you may need to adjust the sleep duration)
 							bat 'timeout /nobreak /t 10'
 						} else {
