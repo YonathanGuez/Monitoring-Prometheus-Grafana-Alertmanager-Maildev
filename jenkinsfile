@@ -26,10 +26,15 @@ pipeline {
 						if (dockerStatus != 0) {
 							 error("Docker is not running. try to start docker in your laptop...")
 						} else {
-							echo "Docker is already running."
-							bat 'docker network rm monitoring'
-							bat 'docker volume rm -f prometheus-data'
-							bat 'docker volume rm -f grafana-storage'
+						    try {
+								echo "Docker is already running."
+								bat 'docker network rm monitoring'
+								bat 'docker volume rm -f prometheus-data'
+								bat 'docker volume rm -f grafana-storage'
+							} catch (Exception e) {
+								// Handle the exception
+								echo "Failed to remove the Docker network: ${e.message}"
+							}
 							
 						}
 					}
