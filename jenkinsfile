@@ -29,6 +29,8 @@ pipeline {
 						    try {
 								echo "Docker is already running."
 								bat 'docker network rm monitoring'
+								bat 'docker rm -f prometheus'
+								bat 'docker rm -f grafana'
 								bat 'docker volume rm -f prometheus-data'
 								bat 'docker volume rm -f grafana-storage'
 							} catch (Exception e) {
