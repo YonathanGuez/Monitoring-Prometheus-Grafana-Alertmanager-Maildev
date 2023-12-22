@@ -28,11 +28,11 @@ pipeline {
 						} else {
 						    try {
 								echo "Docker is already running."
-								bat 'docker network rm monitoring'
 								bat 'docker rm -f prometheus'
 								bat 'docker rm -f grafana'
 								bat 'docker volume rm -f prometheus-data'
 								bat 'docker volume rm -f grafana-storage'
+								bat 'docker network rm monitoring'
 							} catch (Exception e) {
 								// Handle the exception
 								echo "Failed to remove the Docker network: ${e.message}"
