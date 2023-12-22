@@ -90,11 +90,7 @@ pipeline {
 						}
 						
 						// Wait for containers to start (depends on your setup)
-						if (isUnix()) {
-							sh 'sleep 10'
-						} else {
-							bat 'timeout /nobreak /t 10 > nul'
-						}
+						sleep time: 10, unit: 'SECONDS'
 					}
 				}
 			}
