@@ -1,7 +1,7 @@
 # PowerShell Script for Automation - Configuration of Prometheus YAML
 
 # Get local IP address using Get-NetIPAddress
-$localIP = (Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias 'Ethernet' | Where-Object {$_.PrefixOrigin -eq 'WellKnown'}).IPAddress
+$localIP = (Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias 'Wi-Fi').IPAddress
 
 # Debugging line: Display the obtained local IP
 Write-Output "Obtained local IP: $localIP"
