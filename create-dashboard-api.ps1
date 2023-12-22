@@ -81,12 +81,14 @@ catch {
 # Step 5: Create the Dashboard from JSON File
 $keyTokenApi = $tokenKey  # Replace with the actual API key
 $dashboardContent = Get-Content $dashboardJsonFile | Out-String
+Write-Host $dashboardContent
 
 try {
-    Invoke-RestMethod -Uri 'http://localhost:3000/api/dashboards/db' -Method Post -Headers @{"Authorization"="Bearer $keyTokenApi"; "Content-Type"="application/json"} -Insecure -Body $dashboardContent 
+    [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+    Invoke-RestMethod -Uri 'http://localhost:3000/api/dashboards/db' -Method Post -Headers @{"Authorization"="Bearer $keyTokenApi"; "Content-Type"="application/json"} -Body $dashboardContent
     Write-Output "Dashboard creation successful."
 }
 catch {
-    Write-Host "Failed step5 to create dashboard. Error: $($_.Exception.Message)"
+    Write-Host "Failed to create dashboard. Error: $($_.Exception.Message)"
     exit 1
 }
