@@ -102,7 +102,7 @@ pipeline {
                     if (isUnix()) {
                         sh './create-dashboard-api.sh dashboard.json'
                     } else {
-                        bat '.\\create-dashboard-api.ps1 dashboard.json'
+                         bat 'powershell -File .\\create-dashboard-api.ps1 dashboard.json'
                     }
                 }
             }
