@@ -112,12 +112,12 @@ pipeline {
                     // Replace 'admin:admin' with your Grafana credentials
                     def response
                     if (isUnix()) {
-                        response = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://admin:admin@localhost:3000', returnStatus: true).trim()
+                        resURL = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://admin:admin@localhost:3000', returnStatus: true).trim()
                     } else {
-                        response = bat(script: 'curl -s -o NUL -w "%%{http_code}" http://admin:admin@localhost:3000', returnStatus: true).trim()
-						
+                        resURL = bat(script: 'curl -s -o NUL -w "%%{http_code}" http://admin:admin@localhost:3000', returnStatus: true).trim()
+						bat "${resURL}"
                     }
-                    if (response == '200') {
+                    if ("${resURL}" == '200') {
                         echo 'Dashboard URL is accessible.'
                     } else {
                         error 'Failed to access Dashboard URL.'
