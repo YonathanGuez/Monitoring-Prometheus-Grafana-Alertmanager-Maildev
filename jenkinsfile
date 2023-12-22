@@ -93,7 +93,7 @@ pipeline {
 						if (isUnix()) {
 							sh 'sleep 10'
 						} else {
-							bat 'timeout /nobreak /t 10'
+							bat 'timeout /nobreak /t 10 > nul'
 						}
 					}
 				}
