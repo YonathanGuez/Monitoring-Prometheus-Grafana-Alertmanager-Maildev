@@ -4,6 +4,10 @@ def repoName
 pipeline {
     agent any
 
+	parameters {
+        booleanParam(name: 'SKIP_STOPCONTAINER', defaultValue: true, description: 'Skip TO Remove all Containers')
+    }
+	
     stages {
 	    stage('env Repository') {
             steps {
@@ -106,28 +110,36 @@ pipeline {
             }
         }
 
-        stage('Check Dashboard URL') {
-			steps {
-				script {
-					// Replace 'admin:admin' with your Grafana credentials
-					def resURL
-					if (isUnix()) {
-						resURL = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://admin:admin@localhost:3000', returnStatus: true).trim()
-					} else {
-						resURL = bat(script: 'curl -s -o NUL -w "%%{http_code}" http://admin:admin@localhost:3000', returnStatus: true).trim()
-					}
-					println resURL
-					if (resURL == '200') {
-						echo 'Dashboard URL is accessible.'
-					} else {
-						error 'Failed to access Dashboard URL.'
-					}
-				}
-			}
-		}
+       stage('Check Dashboard URL') {
+            steps {
+                script {
+                   def response = httpRequest(
+                        acceptType: 'APPLICATION_JSON',
+                        contentType: 'APPLICATION_JSON',
+                        httpMode: 'GET',
+                        url: 'http://admin:admin@localhost:3000'
+                    )
 
+                    // Print the HTTP status code
+                    echo "HTTP Status Code: ${response}"
+
+                    // Add your logic based on the HTTP status code
+                    if (response.getStatus() == 200) {
+                        echo 'Success!'
+                        // Add more steps or logic for success case
+                    } else {
+                        error 'Failed!'
+                        // Add more steps or logic for failure case
+                    }
+                  
+                }
+            }
+        }
 
         stage('Clean and Stop Containers') {
+			when {
+                expression { params.SKIP_STOPCONTAINER == false }
+            }
             steps {
                 script {
                     // Docker stop and remove based on OS
