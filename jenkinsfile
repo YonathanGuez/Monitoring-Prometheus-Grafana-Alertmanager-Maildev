@@ -63,14 +63,12 @@ pipeline {
 		stage('Create prometheus.yml') {
             steps {
 				script {
-					dir("${repoName}") {
-						if (isUnix()) {
-							sh './authomation_config_prometheus_yml.sh'
-						}else {
-							def scriptPath = "$WORKSPACE\\authomation_config_prometheus_yml.ps1"
-                            // Execute the PowerShell scripT
-                            bat "powershell.exe -File $scriptPath"
-						}
+					if (isUnix()) {
+						sh './authomation_config_prometheus_yml.sh'
+					}else {
+						def scriptPath = "$WORKSPACE\\authomation_config_prometheus_yml.ps1"
+						// Execute the PowerShell scripT
+						bat "powershell.exe -File $scriptPath"
 					}
 				}
             }
@@ -79,19 +77,19 @@ pipeline {
         stage('Docker Run Prometheus and Grafana') {
 			steps {
 				script {
-					dir("${repoName}") {
+					//dir("${repoName}") {
 						// Docker run based on OS
 						if (isUnix()) {
 							docker.image('prom/prometheus').withRun('-d -p 9090:9090 --name prometheus --network monitoring -v prometheus-IP.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus')
 							docker.image('grafana/grafana').withRun('-d -p 3000:3000 --name grafana  --network monitoring --volume grafana-storage:/var/lib/grafana')
 						} else {
-							bat "docker run -d -p 9090:9090 --name prometheus --network monitoring -v $WORKSPACE\\Monitoring-Prometheus-Grafana\\prometheus-IP.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus"
+							bat "docker run -d -p 9090:9090 --name prometheus --network monitoring -v $WORKSPACE\\prometheus-IP.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus"
 							bat "docker run -d -p 3000:3000 --network monitoring --name=grafana --volume grafana-storage:/var/lib/grafana grafana/grafana"
 						}
 						
 						// Wait for containers to start (depends on your setup)
 						sleep time: 10, unit: 'SECONDS'
-					}
+				//	}
 				}
 			}
 		}
