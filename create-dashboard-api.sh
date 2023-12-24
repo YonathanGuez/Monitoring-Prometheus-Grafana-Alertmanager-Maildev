@@ -28,3 +28,7 @@ KEY_TOKEN_API=$TOKEN_KEY  # Replace with the actual API key
 DASHBOARD_CONTENT=$(cat $DASHBOARD_JSON_FILE)
 
 curl -X POST --insecure -H "Authorization: Bearer $KEY_TOKEN_API" -H "Content-Type: application/json" -d "$DASHBOARD_CONTENT" http://localhost:3000/api/dashboards/db
+
+# Step 6: Add Datasource from JSON File
+DATASOURCE=$(cat datasource-prometheus.json)
+curl -X POST --insecure -H "Authorization: Bearer $KEY_TOKEN_API" -H "Content-Type: application/json" -d "$DATASOURCE" http://localhost:3000/api/datasources
