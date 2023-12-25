@@ -1,6 +1,7 @@
 {
   "name": "Prometheus",
   "type": "prometheus",
+  "uid": "prom-test",
   "access": "proxy",
   "url": "http://prometheus:9090/",
   "basicAuth": false
