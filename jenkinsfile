@@ -102,9 +102,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh './create-dashboard-api.sh dashboard.json'
+                        sh './create-dashboard-api.sh dashboard-windows.json'
                     } else {
-                         bat 'powershell -File .\\create-dashboard-api.ps1 dashboard.json'
+                        bat 'powershell -File .\\create-dashboard-api.ps1 dashboard-windows.json'
                     }
                 }
             }
