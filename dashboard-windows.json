@@ -1,89 +1,41 @@
 {
-  "__inputs": [
-    {
-      "name": "DS__VICTORIAMETRICS",
-      "label": " VictoriaMetrics",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "panel",
-      "id": "bargauge",
-      "name": "Bar gauge",
-      "version": ""
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "7.2.0"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "singlestat",
-      "name": "Singlestat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table-old",
-      "name": "Table (old)",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
-  "description": "Windows Prometheus monitors the display of the dashboard, adds the resource summary display, and optimizes the detailed display. Update to support windows_exporter 0.13.0.",
+  "description": "Windows Prometheus monitors the Kanban display, adds the resource summary display, and optimizes the detailed display . Edited By Soroush Kaviani",
   "editable": true,
-  "gnetId": 13466,
+  "fiscalYearStartMonth": 0,
+  "gnetId": 13868,
   "graphTooltip": 1,
-  "id": null,
-  "iteration": 1602471179424,
+  "id": 2,
   "links": [
-    {
-      "icon": "bolt",
-      "tags": [],
-      "targetBlank": true,
-      "title": "Update",
-      "tooltip": "Update current dashboard",
-      "type": "link",
-      "url": "https://grafana.com/grafana/dashboards/13466"
-    },
     {
       "icon": "question",
       "tags": [],
       "targetBlank": true,
       "title": "GitHub",
-      "tooltip": "View more dashboards",
+      "tooltip": "View Code Automation",
       "type": "link",
-      "url": "https://github.com/prettysolution/"
+      "url": "https://github.com/YonathanGuez/Monitoring-Prometheus-Grafana"
     },
     {
       "asDropdown": true,
@@ -93,39 +45,48 @@
       "type": "dashboards"
     }
   ],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
         "y": 0
       },
-      "id": 41,
+      "id": 43,
       "panels": [],
-      "title": "Resource overview (associated JOB item) currently selected host: 【$show_hostname】 instance: $instance",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Resource details [$show_hostname: $instance]",
       "type": "row"
     },
     {
       "columns": [],
-      "datasource": "${DS__VICTORIAMETRICS}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
       },
       "fontSize": "80%",
       "gridPos": {
-        "h": 6,
+        "h": 3,
         "w": 24,
         "x": 0,
         "y": 1
       },
       "id": 45,
-      "pageSize": null,
       "showHeader": true,
       "sort": {
         "col": 0,
@@ -134,9 +95,8 @@
       "styles": [
         {
           "$$hashKey": "object:1557",
-          "alias": "operating system",
+          "alias": "Operating System",
           "align": "auto",
-          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -155,9 +115,8 @@
         },
         {
           "$$hashKey": "object:1570",
-          "alias": "hostname",
+          "alias": "Hostname",
           "align": "auto",
-          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -177,9 +136,8 @@
         },
         {
           "$$hashKey": "object:1609",
-          "alias": "instance",
+          "alias": "instance (connect to details)",
           "align": "auto",
-          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -199,9 +157,8 @@
         },
         {
           "$$hashKey": "object:1622",
-          "alias": "CPUs",
+          "alias": "Number of CPU cores",
           "align": "auto",
-          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -217,16 +174,14 @@
         },
         {
           "$$hashKey": "object:1635",
-          "alias": "RAM",
+          "alias": "Total Memory",
           "align": "auto",
-          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": null,
           "mappingType": 1,
           "pattern": "Value #C",
           "thresholds": [],
@@ -235,7 +190,7 @@
         },
         {
           "$$hashKey": "object:2635",
-          "alias": "uptime",
+          "alias": "Run time",
           "align": "auto",
           "colorMode": "cell",
           "colors": [
@@ -244,7 +199,6 @@
             "rgba(50, 172, 45, 0.97)"
           ],
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": null,
           "mappingType": 1,
           "pattern": "Value #D",
           "thresholds": [
@@ -256,7 +210,7 @@
         },
         {
           "$$hashKey": "object:1809",
-          "alias": "C:/ usage rate",
+          "alias": "C drive usage rate",
           "align": "auto",
           "colorMode": "cell",
           "colors": [
@@ -277,7 +231,7 @@
         },
         {
           "$$hashKey": "object:1821",
-          "alias": "Most used partition%",
+          "alias": "Use the most partition %",
           "align": "auto",
           "colorMode": "cell",
           "colors": [
@@ -298,9 +252,8 @@
         },
         {
           "$$hashKey": "object:2286",
-          "alias": "processes",
+          "alias": "Number of Processes",
           "align": "auto",
-          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -317,9 +270,8 @@
         },
         {
           "$$hashKey": "object:2297",
-          "alias": "services",
+          "alias": "Run Service",
           "align": "auto",
-          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -335,7 +287,7 @@
         },
         {
           "$$hashKey": "object:3599",
-          "alias": "CPU usage",
+          "alias": "CPU Usage",
           "align": "auto",
           "colorMode": "cell",
           "colors": [
@@ -356,7 +308,7 @@
         },
         {
           "$$hashKey": "object:3610",
-          "alias": "Memory usage",
+          "alias": "Memory Usage",
           "align": "auto",
           "colorMode": "cell",
           "colors": [
@@ -377,9 +329,8 @@
         },
         {
           "$$hashKey": "object:5929",
-          "alias": "frequency",
+          "alias": "CPU frequency",
           "align": "auto",
-          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -397,7 +348,6 @@
           "$$hashKey": "object:1311",
           "alias": "",
           "align": "right",
-          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -412,6 +362,10 @@
       ],
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
           "expr": "windows_os_info{job=~\"$job\"} * on(instance) group_right(product) windows_cs_hostname",
           "format": "table",
           "instant": true,
@@ -420,7 +374,11 @@
           "refId": "A"
         },
         {
-          "expr": "time() - windows_system_system_up_time{job=~\"$job\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "expr": "time()-windows_system_system_up_time{job=~\"$job\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -428,7 +386,11 @@
           "refId": "D"
         },
         {
-          "expr": "windows_cs_logical_processors{job=~\"$job\"} - 0",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "expr": "windows_cs_logical_processors{job=~\"$job\"}-0",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -436,6 +398,10 @@
           "refId": "B"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
           "expr": "avg by (instance) (windows_cpu_core_frequency_mhz{job=~\"$job\"})",
           "format": "table",
           "instant": true,
@@ -444,15 +410,23 @@
           "refId": "K"
         },
         {
-          "expr": "100 - (avg by (instance) (irate(windows_cpu_time_total{job=~\"$job\",mode=\"idle\"}[2m])) * 100)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "expr": "100-(avg by (instance) (irate(windows_cpu_time_total{job=~\"$job\",mode=\"idle\"}[2m])) * 100)",
           "format": "table",
           "instant": true,
           "interval": "",
-          "legendFormat": "CPU usage",
+          "legendFormat": "CPU Usage",
           "refId": "I"
         },
         {
-          "expr": "windows_cs_physical_memory_bytes{job=~\"$job\"} - 0",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "expr": "windows_cs_physical_memory_bytes{job=~\"$job\"}-0",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -460,15 +434,23 @@
           "refId": "C"
         },
         {
-          "expr": "100 - 100 * windows_os_physical_memory_free_bytes{job=~\"$job\"} / windows_cs_physical_memory_bytes{job=~\"$job\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "expr": "100-100 * windows_os_physical_memory_free_bytes{job=~\"$job\"} / windows_cs_physical_memory_bytes{job=~\"$job\"}",
           "format": "table",
           "instant": true,
           "interval": "",
-          "legendFormat": "Memory usage",
+          "legendFormat": "Memory Usage",
           "refId": "J"
         },
         {
-          "expr": "1 - (windows_logical_disk_free_bytes{job=~\"$job\",volume=~\"C:\"}/windows_logical_disk_size_bytes{job=~\"$job\",volume=~\"C:\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "expr": "1-(windows_logical_disk_free_bytes{job=~\"$job\",volume=~\"C:\"}/windows_logical_disk_size_bytes{job=~\"$job\",volume=~\"C: \"})",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -476,6 +458,10 @@
           "refId": "E"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
           "expr": "max by (instance) (1-windows_logical_disk_free_bytes{job=~\"$job\"}/windows_logical_disk_size_bytes{job=~\"$job\"})",
           "format": "table",
           "instant": true,
@@ -484,6 +470,10 @@
           "refId": "F"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
           "expr": "windows_os_processes{job=~\"$job\"}",
           "format": "table",
           "instant": true,
@@ -492,6 +482,10 @@
           "refId": "G"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
           "expr": "sum by (instance) (windows_service_state{job=~\"$job\",state=~\"running\"})",
           "format": "table",
           "instant": true,
@@ -500,9 +494,7 @@
           "refId": "H"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$job：Server resource overview",
+      "title": "$job: Server Resource Overview",
       "transform": "table",
       "type": "table-old"
     },
@@ -511,11 +503,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "decimals": 1,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -524,9 +518,9 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 6,
-        "w": 5,
+        "w": 12,
         "x": 0,
-        "y": 7
+        "y": 4
       },
       "hiddenSeries": false,
       "id": 47,
@@ -552,7 +546,7 @@
       },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "10.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -562,7 +556,12 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "100 - (avg by (instance) (irate(windows_cpu_time_total{job=~\"$job\",mode=\"idle\"}[2m])) * 100)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
+          "expr": "100-(avg by (instance) (irate(windows_cpu_time_total{job=~\"$job\",mode=\"idle\"}[5m])) * 100)",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
@@ -571,9 +570,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "CPU usage of each host",
       "tooltip": {
         "shared": true,
@@ -582,9 +579,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -592,25 +587,19 @@
         {
           "$$hashKey": "object:3535",
           "format": "percent",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "$$hashKey": "object:3536",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": false
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -624,10 +613,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -636,9 +627,9 @@
       "fillGradient": 1,
       "gridPos": {
         "h": 6,
-        "w": 5,
-        "x": 5,
-        "y": 7
+        "w": 12,
+        "x": 12,
+        "y": 4
       },
       "hiddenSeries": false,
       "hideTimeOverride": false,
@@ -664,7 +655,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "10.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -680,7 +671,11 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "100.0 - 100 * windows_os_physical_memory_free_bytes{job=~\"$job\"} / windows_cs_physical_memory_bytes{job=~\"$job\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "expr": "100.0-100 * windows_os_physical_memory_free_bytes{job=~\"$job\"} / windows_cs_physical_memory_bytes{job=~\"$job\"}",
           "instant": false,
           "interval": "",
           "legendFormat": "{{instance}}",
@@ -688,9 +683,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Memory usage of each host",
       "tooltip": {
         "shared": true,
@@ -699,9 +692,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -709,25 +700,18 @@
         {
           "$$hashKey": "object:3688",
           "format": "percent",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:3689",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": false
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -735,10 +719,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -746,10 +732,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 6,
+        "h": 5,
         "w": 5,
-        "x": 10,
-        "y": 7
+        "x": 0,
+        "y": 10
       },
       "hiddenSeries": false,
       "hideTimeOverride": false,
@@ -775,7 +761,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "10.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -788,7 +774,12 @@
           "application": {
             "filter": ""
           },
-          "expr": "max by (instance) (irate(windows_net_bytes_sent_total{job=~\"$job\",nic!~'isatap.*|VPN.*'}[2m]))*8",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
+          "expr": "max by (instance) (irate(windows_net_bytes_sent_total{job=~\"$job\",nic!~'isatap.*|VPN.*'}[5m]))*8",
           "format": "time_series",
           "functions": [],
           "group": {
@@ -816,7 +807,12 @@
           "application": {
             "filter": ""
           },
-          "expr": "-max by (instance) (irate(windows_net_bytes_received_total{job=~\"$job\",nic!~'isatap.*|VPN.*'}[2m]))*8",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
+          "expr": "-max by (instance) (irate(windows_net_bytes_received_total{job=~\"$job\",nic!~'isatap.*|VPN.*'}[5m]))*8",
           "format": "time_series",
           "functions": [],
           "group": {
@@ -842,10 +838,8 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
-      "title": "Network details of the maximum traffic network card of each host",
+      "title": "The network details of the maximum traffic network card of each host",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -853,9 +847,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -865,23 +857,17 @@
           "format": "bps",
           "label": "Download　　　　Upload",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:4931",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": false
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -889,10 +875,254 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 7,
+        "x": 5,
+        "y": 10
+      },
+      "hiddenSeries": false,
+      "hideTimeOverride": false,
+      "id": 55,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": false,
+        "rightSide": true,
+        "show": false,
+        "sort": "current",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "10.2.3",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "application": {
+            "filter": ""
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
+          "expr": "-max by (instance) (irate(windows_logical_disk_reads_total[5m]))",
+          "format": "time_series",
+          "functions": [],
+          "group": {
+            "filter": ""
+          },
+          "hide": false,
+          "host": {
+            "filter": ""
+          },
+          "interval": "",
+          "intervalFactor": 1,
+          "item": {
+            "filter": ""
+          },
+          "legendFormat": "{{instance}}_Read",
+          "metric": "mysql_global_status_questions",
+          "mode": 0,
+          "options": {
+            "showDisabledItems": false
+          },
+          "refId": "B",
+          "step": 20
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
+          "expr": "max by (instance) (irate(windows_logical_disk_writes_total[5m]))",
+          "format": "time_series",
+          "functions": [],
+          "group": {
+            "filter": ""
+          },
+          "hide": false,
+          "host": {
+            "filter": ""
+          },
+          "interval": "",
+          "intervalFactor": 1,
+          "item": {
+            "filter": ""
+          },
+          "legendFormat": "{{instance}}_write",
+          "metric": "mysql_global_status_questions",
+          "mode": 0,
+          "options": {
+            "showDisabledItems": false
+          },
+          "refId": "C",
+          "step": 20
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Details of the maximum disk IO of each host",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:5486",
+          "format": "iops",
+          "label": "Read　　　　write",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:5487",
+          "format": "short",
+          "logBase": 1,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "": {
+                  "text": ""
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#299c46",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 60
+              },
+              {
+                "color": "#d44a3a",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 12,
+        "y": 10
+      },
+      "id": 19,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "minVizHeight": 200,
+        "minVizWidth": 200,
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto",
+        "text": {}
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "expr": "100-(avg(irate(windows_cpu_time_total{job=~\"$job\",instance=~\"$instance\",mode=\"idle\"}[2m])))*100 ",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Usage",
+      "type": "gauge"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
+      "fieldConfig": {
+        "defaults": {
           "links": []
         },
         "overrides": []
@@ -900,10 +1130,10 @@
       "fill": 2,
       "fillGradient": 0,
       "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 15,
-        "y": 7
+        "h": 5,
+        "w": 10,
+        "x": 14,
+        "y": 10
       },
       "hiddenSeries": false,
       "hideTimeOverride": false,
@@ -929,7 +1159,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "10.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -942,7 +1172,12 @@
           "application": {
             "filter": ""
           },
-          "expr": "-max by (instance) (irate(windows_logical_disk_read_bytes_total[2m]))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
+          "expr": "-max by (instance) (irate(windows_logical_disk_read_bytes_total[5m]))",
           "format": "time_series",
           "functions": [],
           "group": {
@@ -970,7 +1205,12 @@
           "application": {
             "filter": ""
           },
-          "expr": "max by (instance) (irate(windows_logical_disk_write_bytes_total[2m]))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
+          "expr": "max by (instance) (irate(windows_logical_disk_write_bytes_total[5m]))",
           "format": "time_series",
           "functions": [],
           "group": {
@@ -985,7 +1225,7 @@
           "item": {
             "filter": ""
           },
-          "legendFormat": "{{instance}}_Write",
+          "legendFormat": "{{instance}}_write",
           "metric": "mysql_global_status_questions",
           "mode": 0,
           "options": {
@@ -996,10 +1236,8 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
-      "title": "Maximum disk read and write details of each host",
+      "title": "The maximum disk read and write details of each host",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -1007,9 +1245,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1017,389 +1253,193 @@
         {
           "$$hashKey": "object:5258",
           "format": "Bps",
-          "label": "Read 　　　　write",
+          "label": "Read　　　　write",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:5259",
-          "decimals": null,
           "format": "iops",
           "label": "",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": false
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 6,
-        "w": 4,
-        "x": 20,
-        "y": 7
-      },
-      "hiddenSeries": false,
-      "hideTimeOverride": false,
-      "id": 55,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": false,
-        "rightSide": true,
-        "show": false,
-        "sort": "current",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null as zero",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.2.0",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "application": {
-            "filter": ""
-          },
-          "expr": "-max by (instance) (irate(windows_logical_disk_reads_total[2m]))",
-          "format": "time_series",
-          "functions": [],
-          "group": {
-            "filter": ""
-          },
-          "hide": false,
-          "host": {
-            "filter": ""
-          },
-          "interval": "",
-          "intervalFactor": 1,
-          "item": {
-            "filter": ""
-          },
-          "legendFormat": "{{instance}}_Read",
-          "metric": "mysql_global_status_questions",
-          "mode": 0,
-          "options": {
-            "showDisabledItems": false
-          },
-          "refId": "B",
-          "step": 20
-        },
-        {
-          "application": {
-            "filter": ""
-          },
-          "expr": "max by (instance) (irate(windows_logical_disk_writes_total[2m]))",
-          "format": "time_series",
-          "functions": [],
-          "group": {
-            "filter": ""
-          },
-          "hide": false,
-          "host": {
-            "filter": ""
-          },
-          "interval": "",
-          "intervalFactor": 1,
-          "item": {
-            "filter": ""
-          },
-          "legendFormat": "{{instance}}_Write",
-          "metric": "mysql_global_status_questions",
-          "mode": 0,
-          "options": {
-            "showDisabledItems": false
-          },
-          "refId": "C",
-          "step": 20
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Maximum disk IO details of each host",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:5486",
-          "format": "iops",
-          "label": "Read 　　　　write",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:5487",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
       "collapsed": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 15
       },
-      "id": 43,
+      "id": 41,
       "panels": [],
-      "title": "Resource details 【$show_hostname：$instance】",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Resource overview (associated JOB item) currently selected host: [$show_hostname] instance: $instance",
       "type": "row"
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": false,
-      "colorPrefix": false,
-      "colorValue": true,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": "${DS__VICTORIAMETRICS}",
-      "decimals": 0,
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
       },
-      "format": "s",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 2,
-        "x": 0,
-        "y": 14
-      },
-      "id": 33,
-      "interval": "",
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "100%",
-      "prefix": "",
-      "prefixFontSize": "100%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "repeat": "host",
-      "repeatDirection": "v",
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "{instance=\"172.18.50.249:9182\", job=\"windows-exporter\"}",
-      "targets": [
-        {
-          "expr": "time() - windows_system_system_up_time{job=~\"$job\",instance=~\"$instance\"}",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Up time",
-      "type": "singlestat",
-      "valueFontSize": "50%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": true,
-      "colorValue": true,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": "${DS__VICTORIAMETRICS}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 2,
-        "y": 14
-      },
-      "id": 19,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "100 - (avg(irate(windows_cpu_time_total{job=~\"$job\",instance=~\"$instance\",mode=\"idle\"}[2m])))*100",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "60,90",
-      "title": "CPU usage",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "",
-          "value": ""
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "${DS__VICTORIAMETRICS}",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 0,
+        "y": 16
+      },
+      "id": 57,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
+          "expr": "windows_cs_logical_processors{instance=~\"$instance\"}",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Cores",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 2,
+        "y": 16
+      },
+      "id": 61,
+      "options": {
+        "minVizHeight": 200,
+        "minVizWidth": 200,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto",
+        "text": {}
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
+          "expr": "100-(windows_os_physical_memory_free_bytes{instance=~\"$instance\"} / windows_cs_physical_memory_bytes{instance=~\"$instance\"})*100",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Memory Usage",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
           "max": 100,
           "min": 0,
@@ -1428,12 +1468,16 @@
         "h": 6,
         "w": 4,
         "x": 4,
-        "y": 14
+        "y": 16
       },
       "id": 23,
       "links": [],
       "options": {
         "displayMode": "lcd",
+        "maxVizHeight": 300,
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "namePlacement": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
@@ -1442,21 +1486,27 @@
           "fields": "",
           "values": false
         },
-        "showUnfilled": true
+        "showUnfilled": true,
+        "sizing": "auto",
+        "text": {},
+        "valueMode": "color"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
-          "expr": "100 - (windows_logical_disk_free_bytes{job=~\"$job\",instance=~\"$instance\"} / windows_logical_disk_size_bytes{job=~\"$job\",instance=~\"$instance\"})*100",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
+          "expr": "100-(windows_logical_disk_free_bytes{job=~\"$job\",instance=~\"$instance\"} / windows_logical_disk_size_bytes{job=~\"$job\",instance=~\"$instance\"})*100",
           "instant": false,
           "interval": "",
           "legendFormat": "{{volume}}",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Usage rate of each partition",
+      "title": "Utilization rate of each partition",
       "type": "bargauge"
     },
     {
@@ -1467,10 +1517,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -1481,7 +1533,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 14
+        "y": 16
       },
       "hiddenSeries": false,
       "id": 7,
@@ -1506,7 +1558,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "10.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1518,6 +1570,10 @@
         {
           "application": {
             "filter": ""
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
           },
           "expr": "sum(windows_service_state{job=~\"$job\",instance=~\"$instance\"}) by (state)",
           "format": "time_series",
@@ -1543,10 +1599,8 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
-      "title": "service status",
+      "title": "Service Status",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1554,9 +1608,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1564,25 +1616,18 @@
         {
           "$$hashKey": "object:570",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:571",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": false
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1590,11 +1635,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
-      "decimals": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -1605,7 +1651,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 14
+        "y": 16
       },
       "hiddenSeries": false,
       "id": 27,
@@ -1629,14 +1675,14 @@
       },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "10.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
           "$$hashKey": "object:940",
-          "alias": "Number of processes",
+          "alias": "Number of Processes",
           "color": "#B877D9"
         }
       ],
@@ -1645,18 +1691,20 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
           "expr": "windows_os_processes{job=~\"$job\",instance=~\"$instance\"}",
           "instant": false,
           "interval": "",
-          "legendFormat": "Number of processes",
+          "legendFormat": "Number of Processes",
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
-      "title": "Number of processes",
+      "title": "Number of Processes",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1664,9 +1712,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1675,317 +1721,100 @@
           "$$hashKey": "object:87",
           "decimals": 0,
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:88",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": false,
-      "colorPrefix": false,
-      "colorValue": true,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": "${DS__VICTORIAMETRICS}",
-      "decimals": 0,
-      "description": "",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "text",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
         },
         "overrides": []
-      },
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 2,
-        "x": 0,
-        "y": 16
-      },
-      "id": 35,
-      "interval": "",
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "100%",
-      "prefix": "",
-      "prefixFontSize": "100%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "repeat": "host",
-      "repeatDirection": "v",
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "windows_cs_logical_processors{instance=\"172.18.50.249:9182\", job=\"windows-exporter\"}",
-      "targets": [
-        {
-          "expr": "windows_cs_logical_processors{job=~\"$job\",instance=~\"$instance\"}",
-          "format": "time_series",
-          "instant": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "CPUs",
-      "type": "singlestat",
-      "valueFontSize": "50%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": "${DS__VICTORIAMETRICS}",
-      "decimals": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 3,
         "w": 2,
-        "x": 2,
-        "y": 17
-      },
-      "id": 21,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "{instance=\"172.18.50.249:9182\", job=\"windows-exporter\"}",
-      "targets": [
-        {
-          "expr": "100 - (windows_os_physical_memory_free_bytes{job=~\"$job\",instance=~\"$instance\"} / windows_cs_physical_memory_bytes{job=~\"$job\",instance=~\"$instance\"})*100",
-          "instant": false,
-          "refId": "A"
-        }
-      ],
-      "thresholds": "80,90",
-      "title": "Memory usage",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": false,
-      "colorPrefix": false,
-      "colorValue": true,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": "${DS__VICTORIAMETRICS}",
-      "decimals": 1,
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "bytes",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 2,
         "x": 0,
-        "y": 18
+        "y": 19
       },
-      "id": 37,
-      "interval": "",
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
+      "id": 59,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
         },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "100%",
-      "prefix": "",
-      "prefixFontSize": "100%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "repeat": "host",
-      "repeatDirection": "v",
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "tableColumn": "windows_cs_physical_memory_bytes{instance=\"172.18.50.249:9182\", job=\"windows-exporter\"}",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
           "expr": "windows_cs_physical_memory_bytes{job=~\"$job\",instance=~\"$instance\"}",
-          "format": "time_series",
-          "instant": false,
           "interval": "",
-          "intervalFactor": 1,
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Total memory",
-      "type": "singlestat",
-      "valueFontSize": "50%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "title": "Total Memory",
+      "type": "stat"
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "decimals": 1,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -1996,7 +1825,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 20
+        "y": 22
       },
       "hiddenSeries": false,
       "id": 25,
@@ -2022,7 +1851,7 @@
       },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "10.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2032,18 +1861,21 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
           "expr": "100 - avg(irate(windows_cpu_time_total{job=~\"$job\",instance=~\"$instance\",mode=\"idle\"}[5m]))*100",
           "hide": false,
           "interval": "",
-          "legendFormat": "CPU usage",
+          "legendFormat": "CPU USAGE",
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
-      "title": "CPU usage",
+      "title": "CPU USAGE",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -2051,9 +1883,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -2061,25 +1891,18 @@
         {
           "$$hashKey": "object:366",
           "format": "percent",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:367",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": false
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -2089,17 +1912,19 @@
         "Free virtual memory": "yellow",
         "Physical memory": "dark-red",
         "Virtual memory": "dark-purple",
-        "Remaining physical memory": "green",
-        "Total physical memory": "dark-red"
+        "剩余物理内存": "green",
+        "总物理内存": "dark-red"
       },
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "decimals": 2,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -2110,7 +1935,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 20
+        "y": 22
       },
       "hiddenSeries": false,
       "hideTimeOverride": false,
@@ -2134,14 +1959,14 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "10.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
           "$$hashKey": "object:225",
-          "alias": "/.*Physical memory.*/",
+          "alias": "/.*物理内存.*/",
           "linewidth": 2
         }
       ],
@@ -2153,6 +1978,11 @@
           "application": {
             "filter": ""
           },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
           "expr": "windows_cs_physical_memory_bytes{job=~\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "functions": [],
@@ -2168,7 +1998,7 @@
           "item": {
             "filter": ""
           },
-          "legendFormat": "Total physical memory",
+          "legendFormat": "Total Physical Memory",
           "metric": "mysql_global_status_questions",
           "mode": 0,
           "options": {
@@ -2181,6 +2011,11 @@
           "application": {
             "filter": ""
           },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
           "expr": "windows_os_physical_memory_free_bytes{job=~\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "functions": [],
@@ -2196,7 +2031,7 @@
           "item": {
             "filter": ""
           },
-          "legendFormat": "Remaining physical memory",
+          "legendFormat": "Free Physical Memory",
           "metric": "mysql_global_status_questions",
           "mode": 0,
           "options": {
@@ -2208,6 +2043,10 @@
         {
           "application": {
             "filter": ""
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
           },
           "expr": "windows_os_virtual_memory_bytes{job=~\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
@@ -2233,6 +2072,10 @@
           "step": 5
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
           "expr": "windows_os_virtual_memory_free_bytes{job=~\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 1,
@@ -2241,10 +2084,8 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
-      "title": "Memory details",
+      "title": "Memory Details",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -2252,9 +2093,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -2262,25 +2101,19 @@
         {
           "$$hashKey": "object:197",
           "format": "bytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "$$hashKey": "object:198",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": false
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -2288,10 +2121,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -2302,7 +2137,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 20
+        "y": 22
       },
       "hiddenSeries": false,
       "hideTimeOverride": false,
@@ -2326,14 +2161,14 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "10.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
           "$$hashKey": "object:7159",
-          "alias": "/Total space.*/",
+          "alias": "/总空间.*/",
           "color": "#F2495C"
         }
       ],
@@ -2345,6 +2180,11 @@
           "application": {
             "filter": ""
           },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
           "expr": "windows_logical_disk_free_bytes{job=~\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "functions": [],
@@ -2360,7 +2200,7 @@
           "item": {
             "filter": ""
           },
-          "legendFormat": "remaining space {{volume}}",
+          "legendFormat": "Free Space {{volume}}",
           "metric": "mysql_global_status_questions",
           "mode": 0,
           "options": {
@@ -2373,6 +2213,11 @@
           "application": {
             "filter": ""
           },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
           "expr": "windows_logical_disk_size_bytes{job=~\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "functions": [],
@@ -2388,7 +2233,7 @@
           "item": {
             "filter": ""
           },
-          "legendFormat": "Total space {{volume}}",
+          "legendFormat": "Total Space {{volume}}",
           "metric": "mysql_global_status_questions",
           "mode": 0,
           "options": {
@@ -2399,10 +2244,8 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
-      "title": "Free disk space",
+      "title": "Free Disk Space",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -2410,9 +2253,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -2420,25 +2261,19 @@
         {
           "$$hashKey": "object:312",
           "format": "decbytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "$$hashKey": "object:313",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -2446,10 +2281,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -2460,7 +2297,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 28
+        "y": 30
       },
       "hiddenSeries": false,
       "hideTimeOverride": false,
@@ -2486,7 +2323,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "10.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2499,6 +2336,11 @@
           "application": {
             "filter": ""
           },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
           "expr": "irate(windows_net_bytes_sent_total{job=~\"$job\",instance=~\"$instance\",nic!~'isatap.*|VPN.*'}[5m])*8>0\r",
           "format": "time_series",
           "functions": [],
@@ -2514,7 +2356,7 @@
           "item": {
             "filter": ""
           },
-          "legendFormat": "{{nic}}-Sent-Upload",
+          "legendFormat": "{{nic}}-Sent- Upload",
           "metric": "mysql_global_status_questions",
           "mode": 0,
           "options": {
@@ -2527,6 +2369,11 @@
           "application": {
             "filter": ""
           },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
+          "exemplar": true,
           "expr": "irate(windows_net_bytes_received_total{job=~\"$job\",instance=~\"$instance\",nic!~'isatap.*|VPN.*'}[5m])*8\n",
           "format": "time_series",
           "functions": [],
@@ -2537,11 +2384,12 @@
           "host": {
             "filter": ""
           },
+          "interval": "",
           "intervalFactor": 1,
           "item": {
             "filter": ""
           },
-          "legendFormat": "{{nic}}-Received-download",
+          "legendFormat": "{{nic}}-Received- Download",
           "metric": "mysql_global_status_questions",
           "mode": 0,
           "options": {
@@ -2552,9 +2400,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Network details",
       "tooltip": {
         "shared": true,
@@ -2563,9 +2409,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -2573,25 +2417,18 @@
         {
           "$$hashKey": "object:137",
           "format": "bps",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:138",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": false
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -2599,10 +2436,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -2613,7 +2452,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 28
+        "y": 30
       },
       "hiddenSeries": false,
       "hideTimeOverride": false,
@@ -2626,8 +2465,6 @@
         "min": true,
         "rightSide": false,
         "show": true,
-        "sort": null,
-        "sortDesc": null,
         "total": false,
         "values": true
       },
@@ -2639,7 +2476,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "10.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2651,6 +2488,10 @@
         {
           "application": {
             "filter": ""
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
           },
           "expr": "irate(windows_logical_disk_read_bytes_total{job=~\"$job\",instance=~\"$instance\"}[5m])\r",
           "format": "time_series",
@@ -2679,6 +2520,10 @@
           "application": {
             "filter": ""
           },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
           "expr": "irate(windows_logical_disk_write_bytes_total{job=~\"$job\",instance=~\"$instance\"}[5m])\r",
           "format": "time_series",
           "functions": [],
@@ -2704,10 +2549,8 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
-      "title": "Disk read and write",
+      "title": "Disk Read and Write",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -2715,9 +2558,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -2725,25 +2566,18 @@
         {
           "$$hashKey": "object:761",
           "format": "Bps",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:762",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -2751,10 +2585,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -2765,7 +2601,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 28
+        "y": 30
       },
       "hiddenSeries": false,
       "hideTimeOverride": false,
@@ -2789,7 +2625,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "10.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2801,6 +2637,10 @@
         {
           "application": {
             "filter": ""
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
           },
           "expr": "irate(windows_logical_disk_reads_total{job=~\"$job\",instance=~\"$instance\"}[5m])",
           "format": "time_series",
@@ -2829,6 +2669,10 @@
           "application": {
             "filter": ""
           },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
           "expr": "irate(windows_logical_disk_writes_total{job=~\"$job\",instance=~\"$instance\"}[5m])",
           "format": "time_series",
           "functions": [],
@@ -2854,9 +2698,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Disk IO",
       "tooltip": {
         "shared": true,
@@ -2865,9 +2707,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -2875,25 +2715,18 @@
         {
           "$$hashKey": "object:815",
           "format": "iops",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:816",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -2901,11 +2734,13 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prom-test"
+      },
       "decimals": 2,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -2913,10 +2748,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 6,
-        "w": 6,
+        "h": 7,
+        "w": 24,
         "x": 0,
-        "y": 36
+        "y": 38
       },
       "hiddenSeries": false,
       "hideTimeOverride": false,
@@ -2936,9 +2771,12 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "10.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2948,16 +2786,18 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prom-test"
+          },
           "expr": "(irate(windows_net_bytes_total{job=~\"$job\",instance=~\"$instance\",nic!~'isatap.*|VPN.*'}[5m]) * 8 / windows_net_current_bandwidth{job=~\"$job\",instance=~\"$instance\",nic!~'isatap.*|VPN.*'}) * 100",
           "legendFormat": "{{nic}}",
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
-      "title": "Network usage",
+      "title": "Network Usage",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -2965,9 +2805,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -2975,422 +2813,23 @@
         {
           "$$hashKey": "object:915",
           "format": "percent",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:916",
           "format": "bytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 6,
-        "y": 36
-      },
-      "hiddenSeries": false,
-      "hideTimeOverride": false,
-      "id": 10,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null as zero",
-      "percentage": false,
-      "pluginVersion": "7.2.0",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "application": {
-            "filter": ""
-          },
-          "expr": "irate(windows_net_packets_outbound_discarded{job=~\"$job\",instance=~\"$instance\", nic!~'isatap.*|VPN.*'}[5m]) + irate(windows_net_packets_outbound_errors{job=~\"$job\",instance=~\"$instance\"}[5m])",
-          "format": "time_series",
-          "functions": [],
-          "group": {
-            "filter": ""
-          },
-          "hide": false,
-          "host": {
-            "filter": ""
-          },
-          "interval": "",
-          "intervalFactor": 1,
-          "item": {
-            "filter": ""
-          },
-          "legendFormat": "outbound",
-          "metric": "mysql_global_status_questions",
-          "mode": 0,
-          "options": {
-            "showDisabledItems": false
-          },
-          "refId": "B",
-          "step": 15
-        },
-        {
-          "application": {
-            "filter": ""
-          },
-          "expr": "irate(windows_net_packets_received_discarded{job=~\"$job\",instance=~\"$instance\", nic!~'isatap.*|VPN.*'}[5m]) + irate(windows_net_packets_received_errors{job=~\"$job\",instance=~\"$instance\"}[5m])",
-          "format": "time_series",
-          "functions": [],
-          "group": {
-            "filter": ""
-          },
-          "hide": false,
-          "host": {
-            "filter": ""
-          },
-          "interval": "",
-          "intervalFactor": 1,
-          "item": {
-            "filter": ""
-          },
-          "legendFormat": "received",
-          "metric": "mysql_global_status_questions",
-          "mode": 0,
-          "options": {
-            "showDisabledItems": false
-          },
-          "refId": "A",
-          "step": 15
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Network discarded/error packets",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:518",
-          "format": "pps",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:519",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 12,
-        "y": 36
-      },
-      "hiddenSeries": false,
-      "hideTimeOverride": false,
-      "id": 12,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null as zero",
-      "percentage": false,
-      "pluginVersion": "7.2.0",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "application": {
-            "filter": ""
-          },
-          "expr": "windows_system_threads{job=~\"$job\",instance=~\"$instance\"}",
-          "format": "time_series",
-          "functions": [],
-          "group": {
-            "filter": ""
-          },
-          "hide": false,
-          "host": {
-            "filter": ""
-          },
-          "interval": "",
-          "intervalFactor": 1,
-          "item": {
-            "filter": ""
-          },
-          "legendFormat": "system_threads",
-          "metric": "mysql_global_status_questions",
-          "mode": 0,
-          "options": {
-            "showDisabledItems": false
-          },
-          "refId": "A",
-          "step": 20
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "system_threads",
-      "tooltip": {
-        "shared": false,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:414",
-          "format": "none",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:415",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS__VICTORIAMETRICS}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 18,
-        "y": 36
-      },
-      "hiddenSeries": false,
-      "hideTimeOverride": false,
-      "id": 13,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null as zero",
-      "percentage": false,
-      "pluginVersion": "7.2.0",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "application": {
-            "filter": ""
-          },
-          "expr": "irate(windows_system_exception_dispatches_total{job=~\"$job\",instance=~\"$instance\"}[5m])",
-          "format": "time_series",
-          "functions": [],
-          "group": {
-            "filter": ""
-          },
-          "hide": false,
-          "host": {
-            "filter": ""
-          },
-          "interval": "",
-          "intervalFactor": 1,
-          "item": {
-            "filter": ""
-          },
-          "legendFormat": "exceptions",
-          "metric": "mysql_global_status_questions",
-          "mode": 0,
-          "options": {
-            "showDisabledItems": false
-          },
-          "refId": "A",
-          "step": 20
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "System exception dispatches",
-      "tooltip": {
-        "shared": false,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:466",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:467",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     }
   ],
-  "refresh": false,
-  "schemaVersion": 26,
-  "style": "dark",
+  "refresh": "10s",
+  "schemaVersion": 39,
   "tags": [
     "Prometheus",
     "windows_exporter"
@@ -3398,9 +2837,15 @@
   "templating": {
     "list": [
       {
-        "allValue": null,
-        "current": {},
-        "datasource": "${DS__VICTORIAMETRICS}",
+        "current": {
+          "selected": false,
+          "text": "MyIP",
+          "value": "MyIP"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prom-test"
+        },
         "definition": "label_values(windows_cs_hostname, job)",
         "hide": 0,
         "includeAll": false,
@@ -3408,21 +2853,29 @@
         "multi": false,
         "name": "job",
         "options": [],
-        "query": "label_values(windows_cs_hostname, job)",
+        "query": {
+          "query": "label_values(windows_cs_hostname, job)",
+          "refId": "Prometheus-job-Variable-Query"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
       },
       {
-        "allValue": null,
-        "current": {},
-        "datasource": "${DS__VICTORIAMETRICS}",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prom-test"
+        },
         "definition": "label_values(windows_cs_hostname{job=~\"$job\"}, hostname)",
         "hide": 0,
         "includeAll": true,
@@ -3430,21 +2883,29 @@
         "multi": false,
         "name": "hostname",
         "options": [],
-        "query": "label_values(windows_cs_hostname{job=~\"$job\"}, hostname)",
+        "query": {
+          "query": "label_values(windows_cs_hostname{job=~\"$job\"}, hostname)",
+          "refId": "Prometheus-hostname-Variable-Query"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
       },
       {
-        "allValue": null,
-        "current": {},
-        "datasource": "${DS__VICTORIAMETRICS}",
+        "current": {
+          "selected": false,
+          "text": "192.168.1.14:9182",
+          "value": "192.168.1.14:9182"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prom-test"
+        },
         "definition": "label_values(windows_cs_hostname{job=~\"$job\",hostname=~\"$hostname\"}, instance)",
         "hide": 0,
         "includeAll": false,
@@ -3452,35 +2913,45 @@
         "multi": false,
         "name": "instance",
         "options": [],
-        "query": "label_values(windows_cs_hostname{job=~\"$job\",hostname=~\"$hostname\"}, instance)",
+        "query": {
+          "query": "label_values(windows_cs_hostname{job=~\"$job\",hostname=~\"$hostname\"}, instance)",
+          "refId": "Prometheus-instance-Variable-Query"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
       },
       {
-        "allValue": null,
-        "current": {},
-        "datasource": "${DS__VICTORIAMETRICS}",
+        "current": {
+          "selected": false,
+          "text": "DESKTOP-6FU8ASS",
+          "value": "DESKTOP-6FU8ASS"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prom-test"
+        },
         "definition": "label_values(windows_cs_hostname{job=~\"$job\",instance=~\"$instance\"}, hostname)",
         "hide": 2,
         "includeAll": false,
-        "label": "Show the hostname used",
+        "label": "展示使用的主机名",
         "multi": false,
         "name": "show_hostname",
         "options": [],
-        "query": "label_values(windows_cs_hostname{job=~\"$job\",instance=~\"$instance\"}, hostname)",
+        "query": {
+          "query": "label_values(windows_cs_hostname{job=~\"$job\",instance=~\"$instance\"}, hostname)",
+          "refId": "Prometheus-show_hostname-Variable-Query"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -3488,7 +2959,7 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -3516,7 +2987,8 @@
     ]
   },
   "timezone": "",
-  "title": "windows_exporter for Prometheus Dashboard",
-  "uid": "Kdh0OoSGz2",
-  "version": 3
+  "title": "Windows Servers",
+  "uid": "vmpUdCo7k",
+  "version": 2,
+  "weekStart": ""
 }
