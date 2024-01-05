@@ -78,8 +78,21 @@ catch {
     exit 1
 }
 
-# Step 5: Create the Dashboard from JSON File
+
 $keyTokenApi = $tokenKey  # Replace with the actual API key
+$configDataSources= Get-Content -Path .\datasource-prometheus.json
+# Step 5 : Add Data source Prometheus
+try {
+    [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+    Invoke-RestMethod -Uri 'http://localhost:3000/api/datasources' -Method Post -Headers @{"Authorization"="Bearer $keyTokenApi"; "Content-Type"="application/json"} -Body $configDataSources
+    Write-Output "DataSource Prometheus creation successful."
+}
+catch {
+    Write-Host "Failed to create DataSource Prometheus. Error: $($_.Exception.Message)"
+    exit 1
+}
+
+# Step 6: Create the Dashboard from JSON File
 $dashboardContent = Get-Content $dashboardJsonFile | Out-String
 Write-Host $dashboardContent
 
@@ -90,17 +103,5 @@ try {
 }
 catch {
     Write-Host "Failed to create dashboard. Error: $($_.Exception.Message)"
-    exit 1
-}
-
-$configDataSources= Get-Content -Path .\datasource-prometheus.json
-# Step 6 : Add Data source Prometheus
-try {
-    [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
-    Invoke-RestMethod -Uri 'http://localhost:3000/api/datasources' -Method Post -Headers @{"Authorization"="Bearer $keyTokenApi"; "Content-Type"="application/json"} -Body $configDataSources
-    Write-Output "DataSource Prometheus creation successful."
-}
-catch {
-    Write-Host "Failed to create DataSource Prometheus. Error: $($_.Exception.Message)"
     exit 1
 }
