@@ -2,6 +2,8 @@
 
 This project facilitates the seamless integration of Prometheus and Grafana on the Windows operating system. Prometheus, an open-source monitoring and alerting toolkit, and Grafana, a widely used analytics and monitoring platform, combine to create a powerful monitoring solution for Windows-based environments.
 
+![Alt text](./doc/grafana.png)
+
 ## Features
 
 - **Prometheus Monitoring:** Set up Prometheus to collect and store time-series data from Windows machines, enabling in-depth monitoring of various metrics such as system performance, resource utilization, and application-specific statistics.
@@ -20,8 +22,9 @@ This project facilitates the seamless integration of Prometheus and Grafana on t
 4. [Automate Deployment Prometheus and Dashboard Grafana](#automate-deployment-prometheus-and-dashboard-grafana)
         - [Linux](#linux)
         - [Windows](#windows)
-5. [Stop And Remove Service windows_exporter](#stop-and-remove-service-windows_exporter)
-6. [License](#license)
+5  [Test Alert Rules Prometheus](#test-alert-rules-prometheus)
+6. [Stop And Remove Service windows_exporter](#stop-and-remove-service-windows_exporter)
+7. [License](#license)
 
 ## Getting Started
 
