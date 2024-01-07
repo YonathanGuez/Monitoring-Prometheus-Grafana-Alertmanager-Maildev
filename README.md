@@ -6,13 +6,22 @@ This project facilitates the seamless integration of Prometheus and Grafana on t
 
 - **Prometheus Monitoring:** Set up Prometheus to collect and store time-series data from Windows machines, enabling in-depth monitoring of various metrics such as system performance, resource utilization, and application-specific statistics.
 
+
 ## Table of Contents
 
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
-- [License](#license)
+1. [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation and Configuration](#installation-and-configuration)
+2. [How to use Prometheus and Grafana](#usage)
+    - [Scraping the Data From Windows with Prometheus](#scraping-the-data-from-windows-with-prometheus)
+    - [Test Prometheus Graph](#test-prometheus-graph)
+    - [Display the Data in Grafana](#display-the-data-in-grafana)
+3. [Real Dashboard with Windows_exporter](#real-dashboard-with-windows_exporter)
+4. [Automate Deployment Prometheus and Dashboard Grafana](#automate-deployment-prometheus-and-dashboard-grafana)
+        - [Linux](#linux)
+        - [Windows](#windows)
+5. [Stop And Remove Service windows_exporter](#stop-and-remove-service-windows_exporter)
+6. [License](#license)
 
 ## Getting Started
 
@@ -20,6 +29,7 @@ This project facilitates the seamless integration of Prometheus and Grafana on t
 
 - Windows 10 Home
 - Docker Desktop
+
 
 ### Installation and Configuration
 
@@ -56,7 +66,7 @@ This project facilitates the seamless integration of Prometheus and Grafana on t
 	you can check it with **http://localhost:9090/metrics** you will see all data it s scrape from itself
 	
 	
-# Usage
+# How to use Prometheus and Grafana
 
 ## Scraping the Data From Windows with Prometheus:
 
@@ -107,9 +117,11 @@ sc create windows_exporter binPath= "C:\path\to\windows_exporter-0.24.0-386.exe 
 
 - stop the server
 - remove volume:
-```
+
+```cmd
 docker volume rm -f  prometheus-data
 ```
+
 if you not succed to remove maybe you need to remove all containes build ( check docker ps -a )
 
 2. Reconfigure the file prometheus.yml :
@@ -127,10 +139,12 @@ change the job_name by th name of your computer and change IP_WINDOWS by your IP
     ```
 	
 3. Create a new volume and run the Server Prometheus 
+
 	```cmd
 	docker volume create prometheus-data
 	docker run -p 9090:9090 -v "C:\temp\prometheus.yml":/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus
 	```
+	
 4. check if you have the connection with your windows_exporter:
 go to your prometheus > target or put this URL **http://localhost:9090/targets?search=**
 
@@ -218,6 +232,7 @@ docker ps
 docker stop ID_PROMETHEUS
 docker stop ID_GRAFANA
 ```
+
 2. Create network
 
 ```cmd
@@ -230,14 +245,17 @@ docker run -p 9090:9090 --name prometheus --network monitoring -v "C:\temp\prome
 ```
 
 4. Run Grafana like this :
+
 ```cmd
 docker run -d -p 3000:3000 --network monitoring --name=grafana --volume grafana-storage:/var/lib/grafana grafana/grafana
 ```
 
 5. check the network:
+
 ```cmd
 docker inspect monitoring
 ```
+
 You will see 2 container related name: grafana and prometheus
 
 so now is more simple for use we only need to put in 
@@ -247,7 +265,7 @@ Go Down and Click on "Save & Test" to ensure that Grafana can connect to Prometh
 
 ### USE API Grafana:
 
-#### Cree un API Token and Dashboard:
+#### Create an API Token and a Dashboard:
 
 For all this steps if you are on windows like me i advice to use cmd of MINGW64 (if you have git you only need to open git bash terminal )
 
@@ -284,7 +302,14 @@ curl -X POST -H "Content-Type: application/json" -d '{"name":"test-token"}' http
 ```
 result : {"id":2,"name":"test-token","key":"glsa_b60AauSVVN35pMEE9bAd87Bzad8iMFaz_96041486"}
 
-5 Create the first Dashboard :
+5. Create a Database Source in Grafana:
+
+```cmd
+DATASOURCE=$(cat datasource-prometheus.json)
+curl -X POST --insecure -H "Authorization: Bearer KEY_TOKEN_API" -H "Content-Type: application/json" -d "$DATASOURCE" http://localhost:3000/api/datasources
+```
+
+6. Create the first Dashboard :
 
 Don't forget to change the KEY_TOKEN_API
 
@@ -306,7 +331,7 @@ curl -X POST --insecure -H "Authorization: Bearer KEY_TOKEN_API" -H "Content-Typ
 }' http://localhost:3000/api/dashboards/db
 ```
 
-Now you can check if you have in your Grafana in:
+Now you can check if you have a Dashboard in your Grafana:
 
 ```
 home > Administration > organization >apiorg
@@ -315,40 +340,46 @@ home > Administration > organization >apiorg
 			  
 ```
 
-** Sumup of all the step with **
+## Real Dashboard with Windows_exporter :
 
-On Linux:
+( with the help of the work of [starsliao](https://github.com/starsliao/Prometheus) )
 
-1) Create file prometheus-IP.yml :[authomation_config_prometheus_yml.sh](authomation_config_prometheus_yml.sh) :
+I build [My Dashboard](./dashboardwindows.json)
+
+
+## Automate Deployment Prometheus and Dashboard Grafana
+
+### Linux:
+
+1) Create file prometheus-IP.yml :[authomation_config_prometheus_yml.sh](./scripts/linux/authomation_config_prometheus_yml.sh) :
 
 ```cmd
 ./authomation_config_prometheus_yml.sh
 ```
 
-2) [create-dashboard-api.sh](create-dashboard-api.sh) :
+2) [create-dashboard-api.sh](./scripts/linux/create-dashboard-api.sh) :
 
 ```cmd
-./create-dashboard-api.sh dashboard.json
+./create-dashboard-api.sh dashboardwindows.json
 ```
 
-On windows :
+### Windows :
 
-1) Create file prometheus-IP.yml :[authomation_config_prometheus_yml.ps1](authomation_config_prometheus_yml.ps1) :
+1) Create file prometheus-IP.yml :[authomation_config_prometheus_yml.ps1](./scripts/windows/authomation_config_prometheus_yml.ps1) :
 
 ```cmd
 powershell -File authomation_config_prometheus_yml.ps1
 ```
 
 
-2) [create-dashboard-api.ps1](create-dashboard-api.ps1) :
+2) [create-dashboard-api.ps1](./scripts/windows/create-dashboard-api.ps1) :
 
 ```cmd
-.\create-dashboard-api.ps1 dashboard.json
-
+.\create-dashboard-api.ps1 dashboardwindows.json
 ```
 
 
-### Stop And Remove Service windows_exporter:
+## Stop And Remove Service windows_exporter:
 
 Use CMD in Administrator:
 1. stop :

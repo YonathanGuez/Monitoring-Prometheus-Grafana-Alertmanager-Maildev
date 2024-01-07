@@ -2,7 +2,7 @@
   "dashboard": {
     "id": null,
     "title": "Windows Servers",
-	"description": "Windows Prometheus monitors the Kanban display, adds the resource summary display, and optimizes the detailed display . Edited By Soroush Kaviani",
+	"description": "Windows Prometheus monitors the Kanban display, adds the resource summary display, and optimizes the detailed display .",
 	"editable": true,
 	"fiscalYearStartMonth": 0,
 	"links": [
@@ -1889,8 +1889,8 @@
 			"Free virtual memory": "yellow",
 			"Physical memory": "dark-red",
 			"Virtual memory": "dark-purple",
-			"剩余物理内存": "green",
-			"总物理内存": "dark-red"
+			"Rest physical memory": "green",
+			"total physical memory": "dark-red"
 		  },
 		  "bars": false,
 		  "dashLength": 10,
@@ -1943,7 +1943,7 @@
 		  "seriesOverrides": [
 			{
 			  "$$hashKey": "object:225",
-			  "alias": "/.*物理内存.*/",
+			  "alias": "/.*physical memory.*/",
 			  "linewidth": 2
 			}
 		  ],
@@ -2145,7 +2145,7 @@
 		  "seriesOverrides": [
 			{
 			  "$$hashKey": "object:7159",
-			  "alias": "/总空间.*/",
+			  "alias": "/total space.*/",
 			  "color": "#F2495C"
 			}
 		  ],

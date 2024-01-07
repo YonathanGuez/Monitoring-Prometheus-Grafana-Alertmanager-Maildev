@@ -68,9 +68,9 @@ pipeline {
             steps {
 				script {
 					if (isUnix()) {
-						sh './authomation_config_prometheus_yml.sh'
+						sh './script/linux/authomation_config_prometheus_yml.sh'
 					}else {
-						def scriptPath = "$WORKSPACE\\authomation_config_prometheus_yml.ps1"
+						def scriptPath = "$WORKSPACE\\scripts\\windows\\authomation_config_prometheus_yml.ps1"
 						// Execute the PowerShell scripT
 						bat "powershell.exe -File $scriptPath"
 					}
@@ -102,9 +102,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh './create-dashboard-api.sh dashboardwindows.json'
+                        sh './scripts/linux/create-dashboard-api.sh ./grafana/dashboardwindows.json'
                     } else {
-                        bat 'powershell -File .\\create-dashboard-api.ps1 dashboardwindows.json'
+                        bat 'powershell -File .\\scripts\\windows\\create-dashboard-api.ps1 .\\grafana\\dashboardwindows.json'
                     }
                 }
             }
