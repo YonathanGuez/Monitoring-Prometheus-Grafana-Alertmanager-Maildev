@@ -84,10 +84,10 @@ pipeline {
 					//dir("${repoName}") {
 						// Docker run based on OS
 						if (isUnix()) {
-							docker.image('prom/prometheus').withRun('-d -p 9090:9090 --name prometheus --network monitoring -v prometheus-IP.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus')
+							docker.image('prom/prometheus').withRun('-d -p 9090:9090 --name prometheus --network monitoring -v prometheus-IP.yml:/etc/prometheus/prometheus.yml -v $WORKSPACE/prometheus/rules.yml:/etc/prometheus/rules.yml -v prometheus-data:/prometheus')
 							docker.image('grafana/grafana').withRun('-d -p 3000:3000 --name grafana  --network monitoring --volume grafana-storage:/var/lib/grafana')
 						} else {
-							bat "docker run -d -p 9090:9090 --name prometheus --network monitoring -v $WORKSPACE\\prometheus-IP.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus"
+							bat "docker run -d -p 9090:9090 --name prometheus --network monitoring -v $WORKSPACE\\prometheus-IP.yml:/etc/prometheus/prometheus.yml -v $WORKSPACE\\prometheus\\rules.yml:/etc/prometheus/rules.yml -v prometheus-data:/prometheus prom/prometheus"
 							bat "docker run -d -p 3000:3000 --network monitoring --name=grafana --volume grafana-storage:/var/lib/grafana grafana/grafana"
 						}
 						

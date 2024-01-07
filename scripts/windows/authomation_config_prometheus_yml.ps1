@@ -13,6 +13,9 @@ global:
   scrape_interval:     15s
   evaluation_interval: 15s
 
+rule_files:
+  - 'rules.yml'
+  
 scrape_configs:
   - job_name: MyIP
     static_configs:

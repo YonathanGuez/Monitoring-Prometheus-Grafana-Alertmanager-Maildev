@@ -147,6 +147,8 @@ change the job_name by th name of your computer and change IP_WINDOWS by your IP
 	
 4. check if you have the connection with your windows_exporter:
 go to your prometheus > target or put this URL **http://localhost:9090/targets?search=**
+![Alt text](./doc/target.png)
+
 
 if you see your NAME_COMPUTER click on "show more" and check if status is Up with your IP 
 
@@ -378,6 +380,50 @@ powershell -File authomation_config_prometheus_yml.ps1
 .\create-dashboard-api.ps1 dashboardwindows.json
 ```
 
+## Test Alert Rules Prometheus:
+
+![Alt text](./doc/statusRuleCPU.png)
+
+Create an Alert CPU rules.yml that UP after 20% used:
+```yml
+groups:
+- name: cpu_alerts
+  rules:
+  - alert: HighCpuUsage
+    expr: (100 * sum(rate(windows_cpu_time_total{mode=~"user|privileged"}[5m])) / 300)*100 > 20
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: "High CPU Usage Detected"
+      description: "CPU usage is above 20% for at least 2 minutes."
+```
+
+we will change our prometheus.yml :
+
+```yml
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+rule_files:
+  - 'rules.yml'
+  
+scrape_configs:
+  - job_name: MyIP
+    static_configs:
+      - targets: ['IPAddress:9182']
+```
+
+now our rule is configurate i need to add my file rules.yml in my docker :
+
+```
+docker run -p 9090:9090 --name prometheus --network monitoring -v "C:\temp\rules.yml":/etc/prometheus/rules.yml -v "C:\temp\prometheus.yml":/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus prom/prometheus
+```
+
+My alert is ready we can wait 2 minutes and see it :
+![Alt text](./doc/alertCPU.png)
+ 
 
 ## Stop And Remove Service windows_exporter:
 

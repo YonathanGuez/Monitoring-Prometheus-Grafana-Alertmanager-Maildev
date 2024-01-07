@@ -1,0 +1,17 @@
+rule_files:
+  - rules.yml
+
+tests:
+  - name: "HighCpuUsage Test"
+    input_series:
+      - series: 'windows_cpu_time_total{core="0,0"}'
+        values: '25239 25239 25239 25239 25239'
+    alert_rule_test:
+      - eval_time: 5s
+        alertname: HighCpuUsage
+        exp_alerts:
+          - exp_labels:
+              severity: critical
+            exp_annotations:
+              summary: "High CPU Usage Detected"
+              description: "CPU usage is above 20% for at least 2 minutes."
