@@ -80,7 +80,7 @@ catch {
 
 
 $keyTokenApi = $tokenKey  # Replace with the actual API key
-$configDataSources= Get-Content -Path .\datasource-prometheus.json
+$configDataSources= Get-Content -Path .\grafana\datasource-prometheus.json
 # Step 5 : Add Data source Prometheus
 try {
     [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}

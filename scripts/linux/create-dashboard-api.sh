@@ -24,7 +24,7 @@ TOKEN_RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d '{"name":"t
 KEY_TOKEN_API=$(echo $TOKEN_RESPONSE | jq -r '.key')
 
 # Step 5: Add Datasource from JSON File
-DATASOURCE=$(cat datasource-prometheus.json)
+DATASOURCE=$(cat ./grafana/datasource-prometheus.json)
 curl -X POST --insecure -H "Authorization: Bearer $KEY_TOKEN_API" -H "Content-Type: application/json" -d "$DATASOURCE" http://localhost:3000/api/datasources
 
 # Step 6: Create the Dashboard from JSON File

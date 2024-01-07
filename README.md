@@ -344,7 +344,7 @@ home > Administration > organization >apiorg
 
 ( with the help of the work of [starsliao](https://github.com/starsliao/Prometheus) )
 
-I build [My Dashboard](./dashboardwindows.json)
+I build [My Dashboard](./grafana/dashboardwindows.json)
 
 
 ## Automate Deployment Prometheus and Dashboard Grafana
