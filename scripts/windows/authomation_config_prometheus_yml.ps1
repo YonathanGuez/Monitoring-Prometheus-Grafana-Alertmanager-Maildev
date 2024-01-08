@@ -15,7 +15,13 @@ global:
 
 rule_files:
   - 'rules.yml'
-  
+
+alerting:
+  alertmanagers:
+    - scheme: http
+      static_configs:
+        - targets: [ 'alertmanager:9093' ]
+		
 scrape_configs:
   - job_name: MyIP
     static_configs:
