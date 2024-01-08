@@ -1,6 +1,6 @@
 global:
-  smtp_smarthost: '0.0.0.0:1025'
-  smtp_from: 'your-email@foxmail.com'
+  smtp_smarthost: 'smtp.gmail.com:25'
+  smtp_from: 'you@gmail.com'
   smtp_require_tls: false
 
 route:
@@ -16,7 +16,7 @@ receivers:
   - name: 'mail'
     email_configs:
      - send_resolved: true
-        to: alert-all@maildev.com
+        to: you@gmail.com
         # tls_config:
         #   insecure_skip_verify: true
         headers:
