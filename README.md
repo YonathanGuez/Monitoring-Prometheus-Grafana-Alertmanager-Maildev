@@ -442,6 +442,15 @@ sc stop windows_exporter
 sc delete windows_exporter
 ```
 
+## TIPS
+
+Check prometheus YAML :
+go in the docker container prometheus:
+
+```cmd
+promtool check config prometheus.yml
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

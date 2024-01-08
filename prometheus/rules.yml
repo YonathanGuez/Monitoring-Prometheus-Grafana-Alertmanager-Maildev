@@ -2,7 +2,7 @@ groups:
 - name: cpu_alerts
   rules:
   - alert: HighCpuUsage
-    expr: (100 * sum(rate(windows_cpu_time_total{mode=~"user|privileged"}[5m])) / 300)*100 > 20
+    expr: (100 * sum(rate(windows_cpu_time_total{mode=~"user|privileged"}[2m])) / 300)*100 > 20
     for: 2m
     labels:
       severity: critical
