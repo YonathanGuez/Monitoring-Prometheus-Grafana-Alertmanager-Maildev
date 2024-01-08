@@ -1,14 +1,18 @@
+global:
+  smtp_smarthost: '127.0.0.1:1025'
+  smtp_from: 'your-email@foxmail.com'
+  smtp_auth_username: 'your-email@foxmail.com'
+  smtp_auth_password: ''
+  smtp_require_tls: false
+
 route:
   receiver: 'mail'
-  repeat_interval: 4h
   group_by: [ alertname ]
-
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 10m
 
 receivers:
   - name: 'mail'
     email_configs:
-      - smarthost: 'localhost:1025'
-        auth_username: 'your_mail@gmail.com'
-        auth_password: ""
-        from: 'your_mail@gmail.com'
-        to: 'some_mail@gmail.com'
+    - to: 'your-email@163.com'
