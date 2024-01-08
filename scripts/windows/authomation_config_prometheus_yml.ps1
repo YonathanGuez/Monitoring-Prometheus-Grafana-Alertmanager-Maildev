@@ -21,7 +21,6 @@ alerting:
     - scheme: http
       static_configs:
         - targets: ['$($localIP):9093']
-		
 scrape_configs:
   - job_name: MyIP
     static_configs:
