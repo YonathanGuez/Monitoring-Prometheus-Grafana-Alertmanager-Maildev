@@ -9,3 +9,12 @@ groups:
     annotations:
       summary: "High CPU Usage Detected"
       description: "CPU usage is above 20% for at least 2 minutes."
+      
+  - name: example
+    rules:
+      - alert: HighErrorRate
+        expr: job:errors_per_second:rate5m > 10
+        for: 1m
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is above 10 errors per second for 1 minutes."
