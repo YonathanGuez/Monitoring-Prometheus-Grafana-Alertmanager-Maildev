@@ -12,7 +12,7 @@ receivers:
     email_configs:
       - to: 'your-email@example.com'
         from: 'alertmanager@example.com'
-        smarthost: 'localhost:1025'
+        smarthost: '0.0.0.0:1025'
         require_tls: false
 
 inhibit_rules:
