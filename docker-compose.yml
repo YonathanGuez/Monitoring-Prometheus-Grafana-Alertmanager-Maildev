@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/rules.yml:/etc/prometheus/rules.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - alertmanager
+
+  alertmanager:
+    image: prom/alertmanager
+    volumes:
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    ports:
+      - "9093:9093"
+    depends_on:
+      - maildev
+
+  maildev:
+    image: maildev/maildev
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+      
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - ./scripts/linux/entrypoint.sh:/entrypoint.sh
+      - ./grafana/dashboardwindows.json:/tmp/grafana/dashboard.json
+      - ./scripts/linux/create-dashboard-api.sh:/tmp/grafana/create-dashboard-api.sh
+      - ./grafana/datasource-prometheus.json:/tmp/grafana/datasource-prometheus.json
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: /bin/sh -c "sleep 45 && sh /entrypoint.sh"

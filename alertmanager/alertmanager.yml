@@ -1,23 +1,26 @@
 global:
-  resolve_timeout: 5m
+  smtp_require_tls: false
+  smtp_smarthost: maildev:1025
+  smtp_from: monitoring-from@example.com
+  smtp_hello: alertmanager
+  resolve_timeout: 10s
 
 route:
   group_by: ['alertname']
-  group_wait: 30s
-  group_interval: 5m
-  repeat_interval: 3h
-
+  group_wait: 3s
+  group_interval: 1m
+  repeat_interval: 1m
+  receiver: 'email-notifier'
+  
 receivers:
   - name: 'email-notifier'
     email_configs:
       - to: 'your-email@example.com'
+        send_resolved: true
         from: 'alertmanager@example.com'
-        smarthost: '0.0.0.0:1025'
-        require_tls: false
-
-inhibit_rules:
-  - source_match:
-      severity: 'critical'
-    target_match:
-      severity: 'warning'
-    equal: ['alertname', 'dev', 'instance']
+        headers:
+            Subject: 'TEST ALERTMANAGER'
+            To: monitoring-to@example.com
+        html: '<br><hr><br>TEST ALERTMANAGER'
+        tls_config:
+            insecure_skip_verify: true
