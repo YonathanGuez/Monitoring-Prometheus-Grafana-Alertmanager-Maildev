@@ -1,19 +1,20 @@
-# Prometheus and Grafana Integration on Windows
+# Prometheus Grafana and Alertmanager Integration on Windows with Docker
 
-This project facilitates the seamless integration of Prometheus and Grafana on the Windows operating system. Prometheus, an open-source monitoring and alerting toolkit, and Grafana, a widely used analytics and monitoring platform, combine to create a powerful monitoring solution for Windows-based environments.
+This project facilitates the integration of Prometheus Grafana and Alertmanager on the Windows operating system. Prometheus, an open-source monitoring and alerting toolkit, and Grafana, a widely used analytics and monitoring platform, combine to create a powerful monitoring solution for Windows-based environments.
 
 ![Alt text](./doc/grafana.png)
 
 ## Features
 
 - **Prometheus Monitoring:** Set up Prometheus to collect and store time-series data from Windows machines, enabling in-depth monitoring of various metrics such as system performance, resource utilization, and application-specific statistics.
-
+-  Prometheus Scrap the data from multiple IP and PORT , grafana will help to show the data , alertmanager can catch the alert-rules from prometheus and transfer the alert in the new format like an Email 
 
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
-    - [Installation and Configuration](#installation-and-configuration)
+	- [FAST START GLOBAL PROJECT](#FAST-START-GLOBAL-PROJECT)
+    - [Installation and Configuration Prometheus](#installation-and-configuration-prometheus)
 2. [How to use Prometheus and Grafana](#usage)
     - [Scraping the Data From Windows with Prometheus](#scraping-the-data-from-windows-with-prometheus)
     - [Test Prometheus Graph](#test-prometheus-graph)
@@ -33,8 +34,35 @@ This project facilitates the seamless integration of Prometheus and Grafana on t
 - Windows 10 Home
 - Docker Desktop
 
+### FAST START GLOBAL PROJECT 
 
-### Installation and Configuration
+Run:
+
+```cmd
+docker-compose up -b
+```
+we will see multiple container : prometheus / grafana / alertmanager / maildev / launchDashboard
+
+if you want to get the data from you computer you need to run :
+
+```cmd
+windows_exporter-0.24.0-386.exe --config.file=config-windowexporter.yml
+```
+
+Check :
+
+grafana: http://localhost:3000/
+alertmanager: http://localhost:9093/
+maildev: http://localhost:1080/
+prometheus: http://localhost:9090/
+
+Explanation:
+
+We will see after 2 min that prometheus send an alert on alertmanager and alermanager transfer the alert on maildev (that is our test email)
+laucherDashboard help us to create the dashboard of grafana for request the grafana API 
+
+
+### Installation and Configuration Prometheus
 
 1. Run Docker Desktop on your machine.
 2. If not already present, create the `C:\temp` folder.
