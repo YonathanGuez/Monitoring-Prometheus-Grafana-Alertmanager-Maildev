@@ -46,7 +46,7 @@ we will see multiple containers : prometheus / grafana / alertmanager / maildev 
 if you want to get the data from you computer you need to [download windows exporter](https://github.com/prometheus-community/windows_exporter/releases/download/v0.24.0/windows_exporter-0.24.0-386.exe) and run :
 
 ```cmd
-windows_exporter-0.24.0-386.exe --config.file=config-windowexporter.yml
+windows_exporter-0.24.0-386.exe --config.file=./windows_exporter/config-windowexporter.yml
 ```
 
 Check :
