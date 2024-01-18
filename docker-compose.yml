@@ -28,11 +28,6 @@ services:
       
   grafana:
     image: grafana/grafana
-    volumes:
-      - ./scripts/linux/entrypoint.sh:/entrypoint.sh
-      - ./grafana/dashboardwindows.json:/tmp/grafana/dashboard.json
-      - ./scripts/linux/create-dashboard-api.sh:/tmp/grafana/create-dashboard-api.sh
-      - ./grafana/datasource-prometheus.json:/tmp/grafana/datasource-prometheus.json
     ports:
       - "3000:3000"
     depends_on:
@@ -42,4 +37,24 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    command: /bin/sh -c "sleep 45 && sh /entrypoint.sh"
+    
+  launchDashboard:
+    image: curlimages/curl
+    ports:
+      - "5000:5000"
+    depends_on:
+      - grafana
+    volumes:
+      - ./grafana/dashboardwindows.json:/tmp/grafana/dashboard.json
+      - ./scripts/linux/create-dashboard-api.sh:/tmp/grafana/create-dashboard-api.sh
+      - ./grafana/datasource-prometheus.json:/tmp/grafana/datasource-prometheus.json
+    command: 
+      - sh
+      - -c
+      - |
+        mkdir /tmp/test
+        cp -R /tmp/grafana/* /tmp/test/
+        chmod -R 777 /tmp/test/*
+        sed -i 's/localhost/host.docker.internal/g' /tmp/test/create-dashboard-api.sh
+        sleep 20
+        sh /tmp/test/create-dashboard-api.sh /tmp/test/dashboard.json
