@@ -41,7 +41,7 @@ Run:
 ```cmd
 docker-compose up -b
 ```
-we will see multiple container : prometheus / grafana / alertmanager / maildev / launchDashboard
+we will see multiple containers : prometheus / grafana / alertmanager / maildev / launchDashboard
 
 if you want to get the data from you computer you need to run :
 
@@ -52,8 +52,11 @@ windows_exporter-0.24.0-386.exe --config.file=config-windowexporter.yml
 Check :
 
 grafana: http://localhost:3000/
+
 alertmanager: http://localhost:9093/
+
 maildev: http://localhost:1080/
+
 prometheus: http://localhost:9090/
 
 Explanation:
