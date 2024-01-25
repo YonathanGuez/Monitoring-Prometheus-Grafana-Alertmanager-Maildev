@@ -1,2 +1,7 @@
 windows_exporter-*.exe
 windows_exporter-*.msi
+prometheus-IP.yml
+short-run.txt
+#eval "$(ssh-agent -s)";ssh-add ~/.ssh/git;git push
+#https://github.com/prometheus-community/windows_exporter/blob/master/docs/collector.cpu.md
+.env

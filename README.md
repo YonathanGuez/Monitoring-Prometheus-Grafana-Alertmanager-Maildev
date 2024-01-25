@@ -37,9 +37,10 @@ This project facilitates the integration of Prometheus Grafana and Alertmanager 
 ### FAST START GLOBAL PROJECT 
 
 Run:
+create en .env and run docker-compose for build all environments ( you must build .env for config COMPUTER_IP)
 
 ```cmd
-docker-compose up -b
+create_env.bat && docker-compose up
 ```
 we will see multiple containers : prometheus / grafana / alertmanager / maildev / launchDashboard
 
@@ -138,6 +139,8 @@ windows_exporter-0.24.0-386.exe --config.file=config-windowexporter.yml
 4. Check the metric in : **http://localhost:9182/metrics**
 
 5. Now Create a Service for run that automaticly 
+
+You must open your CMD with mode administrator 
 
 ```cmd
 sc create windows_exporter binPath= "C:\path\to\windows_exporter-0.24.0-386.exe --config.file=C:\path\to\config-windowexporter.yml"

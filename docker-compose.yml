@@ -6,6 +6,10 @@ services:
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./prometheus/rules.yml:/etc/prometheus/rules.yml
+    environment:
+      - COMPUTER_IP
+    entrypoint: sh -c 'sed "s/MYIP/$COMPUTER_IP/" /etc/prometheus/prometheus.yml > /etc/prometheus/prometheus_updated.yml && cat /etc/prometheus/prometheus_updated.yml && prometheus --config.file=/etc/prometheus/prometheus_updated.yml'
+
     ports:
       - "9090:9090"
     depends_on:

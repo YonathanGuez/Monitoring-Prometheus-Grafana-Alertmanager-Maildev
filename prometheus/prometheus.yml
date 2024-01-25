@@ -17,4 +17,4 @@ scrape_configs:
       - targets: ['localhost:9090']
   - job_name: MyIP
     static_configs:
-      - targets: ['192.168.1.244:9182']
+      - targets: ['MYIP:9182']
