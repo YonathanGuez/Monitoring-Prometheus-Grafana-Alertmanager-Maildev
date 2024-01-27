@@ -42,12 +42,22 @@ create en .env and run docker-compose for build all environments ( you must buil
 ```cmd
 create_env.bat && docker-compose up
 ```
+
 we will see multiple containers : prometheus / grafana / alertmanager / maildev / launchDashboard
 
 This only work if you run windows exporter,if you want to get the data from you computer you need to [download windows exporter](https://github.com/prometheus-community/windows_exporter/releases/download/v0.24.0/windows_exporter-0.24.0-386.exe) and run :
 
 ```cmd
 windows_exporter-0.24.0-386.exe --config.file=./windows_exporter/config-windowexporter.yml
+```
+
+or run kubernetes:
+
+```cmd
+kubectl apply -f ./kubernetes/configmap-prom.yml
+kubectl apply -f ./kubernetes/configmap-grafana.yml
+kubectl apply -f ./kubernetes/configmap-alert.yml
+kubectl apply -f ./kubernetes/deployment.yml
 ```
 
 Check :

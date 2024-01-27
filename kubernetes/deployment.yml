@@ -1,0 +1,208 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+      - name: prometheus
+        image: prom/prometheus
+        ports:
+        - containerPort: 9090
+        volumeMounts:
+        - name: config-files
+          mountPath: /etc/prometheus/
+      volumes:
+      - name: config-files
+        configMap:
+          name: config-files
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service
+spec:
+  selector:
+    app: prometheus
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alertmanager-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alertmanager
+  template:
+    metadata:
+      labels:
+        app: alertmanager
+    spec:
+      containers:
+      - name: alertmanager
+        image: prom/alertmanager
+        ports:
+        - containerPort: 9093
+        volumeMounts:
+        - name: config-alertmanager
+          mountPath: /etc/alertmanager/alertmanager.yml
+      volumes:
+      - name: config-alertmanager
+        configMap:
+          name: config-alertmanager
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alertmanager-service
+spec:
+  selector:
+    app: alertmanager
+  ports:
+    - protocol: TCP
+      port: 9093
+      targetPort: 9093
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: maildev-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: maildev
+  template:
+    metadata:
+      labels:
+        app: maildev
+    spec:
+      containers:
+      - name: maildev
+        image: maildev/maildev
+        ports:
+        - containerPort: 1025
+        - containerPort: 1080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: maildev-service
+spec:
+  selector:
+    app: maildev
+  ports:
+    - name: input-mail
+      protocol: TCP
+      port: 1025
+      targetPort: 1025
+    - name: output-mail
+      protocol: TCP
+      port: 1080
+      targetPort: 1080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /login
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-service
+spec:
+  selector:
+    app: grafana
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: launch-dashboard-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: launch-dashboard
+  template:
+    metadata:
+      labels:
+        app: launch-dashboard
+    spec:
+      containers:
+      - name: launch-dashboard
+        image: curlimages/curl
+        ports:
+        - containerPort: 5000
+        command: 
+          - sh
+          - -c
+          - |
+            # Custom initialization script to check if Grafana and Prometheus are up
+            until curl -s http://grafana-service:3000/; do
+              echo "Waiting for Grafana to be up..."
+              sleep 5
+            done
+
+            until curl -s http://prometheus-service:9090/; do
+              echo "Waiting for Prometheus to be up..."
+              sleep 5
+            done
+
+            # Create a writable directory
+            mkdir -p /tmp/data
+                
+            # Copy files from /tmp/grafana to /data
+            cp /tmp/grafana/* /tmp/data/
+            sed -i 's/localhost/grafana-service/g' /tmp/data/create-dashboard-api.sh
+            sed -i 's/IPprometheus/prometheus-service/g' /tmp/data/datasource-prometheus.json
+            sleep 10
+            sh /tmp/data/create-dashboard-api.sh /tmp/data/dashboard.json
+        volumeMounts:
+        - name: config-grafana
+          mountPath: /tmp/grafana  
+      volumes:
+      - name: config-grafana
+        configMap:
+          name: config-grafana
