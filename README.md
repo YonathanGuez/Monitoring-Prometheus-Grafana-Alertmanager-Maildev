@@ -14,6 +14,8 @@ This project facilitates the integration of Prometheus Grafana and Alertmanager 
 1. [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
 	- [FAST START GLOBAL PROJECT](#FAST-START-GLOBAL-PROJECT)
+		- [Start with docker-compose](#Start-with-docker-compose)
+		- [Start with Kubernetes](#Start-with-Kubernetes) 
     - [Installation and Configuration Prometheus](#installation-and-configuration-prometheus)
 2. [How to use Prometheus and Grafana](#usage)
     - [Scraping the Data From Windows with Prometheus](#scraping-the-data-from-windows-with-prometheus)
@@ -36,6 +38,16 @@ This project facilitates the integration of Prometheus Grafana and Alertmanager 
 
 ### FAST START GLOBAL PROJECT 
 
+This only work if you run windows exporter, [download windows exporter](https://github.com/prometheus-community/windows_exporter/releases/download/v0.24.0/windows_exporter-0.24.0-386.exe) and run :
+
+```cmd
+windows_exporter-0.24.0-386.exe --config.file=./windows_exporter/config-windowexporter.yml
+```
+
+#### Start with docker-compose
+
+Before to run you need to launch windows_exporter
+
 Run:
 create en .env and run docker-compose for build all environments ( you must build .env for config COMPUTER_IP)
 
@@ -45,14 +57,10 @@ create_env.bat && docker-compose up
 
 we will see multiple containers : prometheus / grafana / alertmanager / maildev / launchDashboard
 
-This only work if you run windows exporter,if you want to get the data from you computer you need to [download windows exporter](https://github.com/prometheus-community/windows_exporter/releases/download/v0.24.0/windows_exporter-0.24.0-386.exe) and run :
 
-```cmd
-windows_exporter-0.24.0-386.exe --config.file=./windows_exporter/config-windowexporter.yml
-```
+#### Start with Kubernetes
 
-or run kubernetes:
-Before to run you need to run windows_exporter and change in configmap-prom.yaml your IP :
+Before to run you need to launch windows_exporter and change in configmap-prom.yaml your IP :
 
 ```
 ....
