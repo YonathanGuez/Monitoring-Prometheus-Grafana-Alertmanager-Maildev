@@ -16,8 +16,8 @@ This project facilitates the integration of Prometheus Grafana and Alertmanager 
 	- [FAST START GLOBAL PROJECT](#FAST-START-GLOBAL-PROJECT)
 		- [Start with docker-compose](#Start-with-docker-compose)
 		- [Start with Kubernetes](#Start-with-Kubernetes) 
-    - [Installation and Configuration Prometheus](#installation-and-configuration-prometheus)
 2. [How to use Prometheus and Grafana](#usage)
+    - [Installation and Configuration Prometheus](#installation-and-configuration-prometheus)
     - [Scraping the Data From Windows with Prometheus](#scraping-the-data-from-windows-with-prometheus)
     - [Test Prometheus Graph](#test-prometheus-graph)
     - [Display the Data in Grafana](#display-the-data-in-grafana)
@@ -91,9 +91,10 @@ Explanation:
 
 We will see after 2 min that prometheus send an alert on alertmanager and alermanager transfer the alert on maildev (that is our test email)
 laucherDashboard help us to create the dashboard of grafana for request the grafana API 
+	
+# How to use Prometheus and Grafana
 
-
-### Installation and Configuration Prometheus
+## Installation and Configuration Prometheus
 
 1. Run Docker Desktop on your machine.
 2. If not already present, create the `C:\temp` folder.
@@ -127,8 +128,6 @@ laucherDashboard help us to create the dashboard of grafana for request the graf
 	You will see Prometheus site on your local,  Prometheus exports now data of itself
 	you can check it with **http://localhost:9090/metrics** you will see all data it s scrape from itself
 	
-	
-# How to use Prometheus and Grafana
 
 ## Scraping the Data From Windows with Prometheus:
 
