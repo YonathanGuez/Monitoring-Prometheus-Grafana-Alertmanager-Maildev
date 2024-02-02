@@ -7,7 +7,7 @@ data:
   alertmanager.yml: |-
     global:
       smtp_require_tls: false
-      smtp_smarthost: maildev:1025
+      smtp_smarthost: maildev-service:1025
       smtp_from: monitoring-from@example.com
       smtp_hello: alertmanager
       resolve_timeout: 10s
@@ -24,9 +24,17 @@ data:
             send_resolved: true
             from: 'alertmanager@example.com'
             headers:
-                Subject: 'TEST ALERTMANAGER'
-                To: monitoring-to@example.com
-            html: '<br><hr><br>TEST ALERTMANAGER'
+              Subject: 'Prometheus Alert: {{ .CommonLabels.alertname }}'
+              To: monitoring-to@example.com
+            html: |
+              <br><hr><br>TEST ALERTMANAGER
+              {{ range .Alerts }}
+                <p>
+                  <strong>{{ .Annotations.summary }}</strong><br>
+                  {{ .Annotations.description }}
+                </p>
+                <hr>
+              {{ end }}
             tls_config:
                 insecure_skip_verify: true
 

@@ -36,7 +36,7 @@ spec:
     - protocol: TCP
       port: 9090
       targetPort: 9090
-  type: ClusterIP
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -59,7 +59,7 @@ spec:
         - containerPort: 9093
         volumeMounts:
         - name: config-alertmanager
-          mountPath: /etc/alertmanager/alertmanager.yml
+          mountPath: /etc/alertmanager/
       volumes:
       - name: config-alertmanager
         configMap:
@@ -76,7 +76,7 @@ spec:
     - protocol: TCP
       port: 9093
       targetPort: 9093
-  type: ClusterIP
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -115,7 +115,7 @@ spec:
       protocol: TCP
       port: 1080
       targetPort: 1080
-  type: ClusterIP
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -154,7 +154,7 @@ spec:
     - protocol: TCP
       port: 3000
       targetPort: 3000
-  type: ClusterIP
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment

@@ -52,6 +52,15 @@ windows_exporter-0.24.0-386.exe --config.file=./windows_exporter/config-windowex
 ```
 
 or run kubernetes:
+Before to run you need to run windows_exporter and change in configmap-prom.yaml your IP :
+
+```
+....
+- job_name: MyIP
+        static_configs:
+          - targets: ['YOUR_IP:9182']
+....
+```
 
 ```cmd
 kubectl apply -f ./kubernetes/configmap-prom.yml

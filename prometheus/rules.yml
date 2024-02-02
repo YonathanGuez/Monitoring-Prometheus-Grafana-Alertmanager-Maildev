@@ -2,11 +2,10 @@ groups:
 - name: cpu_alerts
   rules:
   - alert: HighCpuUsage
-    expr: (100 * sum(rate(windows_cpu_time_total{mode=~"user|privileged"}[1m])) / 300)*100 > 20
+    expr: (100 * sum by (instance)(rate(windows_cpu_time_total{instance=~"myip|prometheus",mode=~"user|privileged"}[1m])) / 300) * 100 > 20
     for: 1m
     labels:
       severity: critical
     annotations:
-      summary: "High CPU Usage Detected"
-      description: "CPU usage is above 20% for at least 2 minutes."
-      
+      summary: "High CPU Usage Detected in {{ $labels.instance }}"
+      description: "The instance {{ $labels.instance }}: CPU usage is above 20% for at least 2 minutes."

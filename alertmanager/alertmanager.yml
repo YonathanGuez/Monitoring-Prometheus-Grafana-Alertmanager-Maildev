@@ -19,8 +19,16 @@ receivers:
         send_resolved: true
         from: 'alertmanager@example.com'
         headers:
-            Subject: 'TEST ALERTMANAGER'
-            To: monitoring-to@example.com
-        html: '<br><hr><br>TEST ALERTMANAGER'
+          Subject: 'Prometheus Alert: {{ .CommonLabels.alertname }}'
+          To: monitoring-to@example.com
+        html: |
+          <br><hr><br>TEST ALERTMANAGER
+          {{ range .Alerts }}
+            <p>
+              <strong>{{ .Annotations.summary }}</strong><br>
+              {{ .Annotations.description }}
+            </p>
+            <hr>
+          {{ end }}
         tls_config:
             insecure_skip_verify: true
