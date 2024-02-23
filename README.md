@@ -44,9 +44,9 @@ windows_exporter-0.24.0-386.exe --config.file=./windows_exporter/config-windowex
 My example is compatible only for get the data from windows.
 If you want to get the data from linux you need to [download node_exporter](https://prometheus.io/download/#node_exporter) , run it and change the automation of prometheus and grafana !
 
-#### 2) Start Deployment with two options Docker-compose or Kubernetes:
+#### 2) Start Deployment Docker-compose or Kubernetes:
 
-##### Start with docker-compose
+##### * Start with docker-compose
 
 Run:
 create en .env and run docker-compose for build all environments ( you must build .env for config COMPUTER_IP)
@@ -57,7 +57,7 @@ create_env.bat && docker-compose up
 
 we will see multiple containers : prometheus / grafana / alertmanager / maildev / launchDashboard
 
-##### Start with Kubernetes
+##### * Start with Kubernetes
 
 Before to run you need to launch windows_exporter and change in configmap-prom.yaml your IP :
 
