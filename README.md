@@ -1,19 +1,14 @@
-# Prometheus Grafana and Alertmanager Integration on Windows with Docker
+# Deployment of Prometheus Grafana Alertmanager and MailDev for Windows/linux with Docker and Kubernetes
 
-This project facilitates the integration of Prometheus Grafana and Alertmanager on the Windows operating system. Prometheus, an open-source monitoring and alerting toolkit, and Grafana, a widely used analytics and monitoring platform, combine to create a powerful monitoring solution for Windows-based environments.
+This project streamlines the deployment of Prometheus, Grafana, Alertmanager, and MailDev on both Windows and Linux operating systems. It's designed to enable Prometheus to gather data from Windows systems, creating an automation integration of four powerful open-source monitoring technologies.
 
 ![Alt text](./doc/grafana.png)
-
-## Features
-
-- **Prometheus Monitoring:** Set up Prometheus to collect and store time-series data from Windows machines, enabling in-depth monitoring of various metrics such as system performance, resource utilization, and application-specific statistics.
--  Prometheus Scrap the data from multiple IP and PORT , grafana will help to show the data , alertmanager can catch the alert-rules from prometheus and transfer the alert in the new format like an Email 
 
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
-	- [FAST START GLOBAL PROJECT](#FAST-START-GLOBAL-PROJECT)
+	- [FAST START PROJECT](#FAST-START-PROJECT)
 		- [Start with docker-compose](#Start-with-docker-compose)
 		- [Start with Kubernetes](#Start-with-Kubernetes) 
 2. [How to use Prometheus and Grafana](#usage)
@@ -33,20 +28,25 @@ This project facilitates the integration of Prometheus Grafana and Alertmanager 
 
 ### Prerequisites
 
-- Windows 10 Home
+- Windows 10/11
 - Docker Desktop
+- WSL
 
-### FAST START GLOBAL PROJECT 
+### FAST START PROJECT 
 
-This only work if you run windows exporter, [download windows exporter](https://github.com/prometheus-community/windows_exporter/releases/download/v0.24.0/windows_exporter-0.24.0-386.exe) and run :
+#### 1) Get data from Windows:
+You need to [download windows exporter](https://github.com/prometheus-community/windows_exporter/releases/download/v0.24.0/windows_exporter-0.24.0-386.exe) and run :
 
 ```cmd
 windows_exporter-0.24.0-386.exe --config.file=./windows_exporter/config-windowexporter.yml
 ```
+ 
+My example is compatible only for get the data from windows.
+If you want to get the data from linux you need to [download node_exporter](https://prometheus.io/download/#node_exporter) , run it and change the automation of prometheus and grafana !
 
-#### Start with docker-compose
+#### 2) Start Deployment with two options Docker-compose or Kubernetes:
 
-Before to run you need to launch windows_exporter
+##### Start with docker-compose
 
 Run:
 create en .env and run docker-compose for build all environments ( you must build .env for config COMPUTER_IP)
@@ -57,8 +57,7 @@ create_env.bat && docker-compose up
 
 we will see multiple containers : prometheus / grafana / alertmanager / maildev / launchDashboard
 
-
-#### Start with Kubernetes
+##### Start with Kubernetes
 
 Before to run you need to launch windows_exporter and change in configmap-prom.yaml your IP :
 
