@@ -40,6 +40,8 @@ You need to [download windows exporter](https://github.com/prometheus-community/
 ```cmd
 windows_exporter-0.24.0-386.exe --config.file=./windows_exporter/config-windowexporter.yml
 ```
+
+You can check also the new version of [Windows_exporter](https://github.com/prometheus-community/windows_exporter/releases)
  
 My example is compatible only for get the data from windows.
 If you want to get the data from linux you need to [download node_exporter](https://prometheus.io/download/#node_exporter) , run it and change the automation of prometheus and grafana !
