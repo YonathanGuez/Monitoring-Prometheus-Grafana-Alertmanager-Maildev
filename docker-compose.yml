@@ -60,5 +60,6 @@ services:
         cp -R /tmp/grafana/* /tmp/test/
         chmod -R 777 /tmp/test/*
         sed -i 's/localhost/host.docker.internal/g' /tmp/test/create-dashboard-api.sh
+        dos2unix /tmp/test/create-dashboard-api.sh
         sleep 20
         sh /tmp/test/create-dashboard-api.sh /tmp/test/dashboard.json
