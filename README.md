@@ -34,6 +34,8 @@ This project streamlines the deployment of Prometheus, Grafana, Alertmanager, an
 
 ### FAST START PROJECT 
 
+[![Video Thumbnail](https://i.ytimg.com/vi/F6MATjjkiY0/hqdefault.jpg)](https://www.youtube.com/watch?v=F6MATjjkiY0&t) 
+
 #### 1) Get data from Windows:
 You need to [download windows exporter](https://github.com/prometheus-community/windows_exporter/releases/download/v0.24.0/windows_exporter-0.24.0-386.exe) and run :
 
